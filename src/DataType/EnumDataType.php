@@ -5,10 +5,11 @@ namespace Populator\DataType;
 use Populator\DataType\AbstractDataType;
 use Populator\Structure\Column;
 
-class CharDataType extends AbstractDataType
+class EnumDataType extends AbstractDataType
 {
     public function populate(Column $column): string
     {
-        return $this->faker->realText(mt_rand(min($column->getLength(), 10), $column->getLength()));
+        $availableValues = $column->getValues();
+        return $availableValues[array_rand($availableValues)];
     }
 }

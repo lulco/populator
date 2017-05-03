@@ -37,23 +37,28 @@ class Column
         return isset($this->settings['nullable']) && $this->settings['nullable'] == true;
     }
 
-    public function getDefault()
+    public function getDefault(): ?string
     {
         return $this->settings['default'] ?? null;
     }
 
-    public function getLength()
+    public function getLength(): ?int
     {
         return $this->settings['length'] ?? null;
     }
 
-    public function getDecimals()
+    public function getDecimals(): ?int
     {
         return $this->settings['decimals'] ?? null;
     }
 
-    public function isUnsigned()
+    public function isUnsigned(): bool
     {
         return $this->settings['unsigned'] ?? false;
+    }
+
+    public function getValues(): ?array
+    {
+        return $this->settings['values'] ?? null;
     }
 }

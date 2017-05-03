@@ -3,6 +3,7 @@
 namespace Populator\Populator;
 
 use Exception;
+use Faker\Generator;
 use Populator\DataType\DataTypeInterface;
 use Populator\Structure\Column;
 
@@ -12,7 +13,7 @@ class AutomaticPopulator extends AbstractPopulator
 
     protected $dataTypeClasses = [];
 
-    protected function generateData(): array
+    protected function generateData(Generator $faker): array
     {
         $database = $this->getDatabase();
         $structure = $database->getStructure($this->table);
@@ -25,7 +26,7 @@ class AutomaticPopulator extends AbstractPopulator
             foreach ($foreignKey->getReferencedColumns() as $foreignColumn) {
                 $values[] = $item ? $item->getData($foreignColumn) : null;
             }
-            $data = array_combine($foreignKey->getColumns(), $values);
+            $data += array_combine($foreignKey->getColumns(), $values);
         }
         foreach ($structure->getColumns() as $column) {
             if (array_key_exists($column->getName(), $data)) {
@@ -34,18 +35,18 @@ class AutomaticPopulator extends AbstractPopulator
             if ($column->isAutoincrement()) {
                 continue;
             }
-            $data[$column->getName()] = $this->createValue($column);
+            $data[$column->getName()] = $this->createValue($column, $faker);
         }
         return $data;
     }
 
-    private function createValue(Column $column)
+    private function createValue(Column $column, Generator $faker)
     {
-        $dataTypeClass = $this->findDataTypeClassName($column);
+        $dataTypeClass = $this->findDataTypeClassName($column, $faker);
         return $dataTypeClass->populate($column);
     }
 
-    private function findDataTypeClassName(Column $column)
+    private function findDataTypeClassName(Column $column, Generator $faker)
     {
         $className = null;
         if (isset($this->columnNameClasses[$column->getName()])) {
@@ -68,6 +69,6 @@ class AutomaticPopulator extends AbstractPopulator
             throw new Exception('Data type "' . $className . '" doesn\'t exist');
         }
 
-        return new $className($this->faker);
+        return new $className($faker);
     }
 }

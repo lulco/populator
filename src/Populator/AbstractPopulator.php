@@ -13,9 +13,6 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var DatabaseInterface[] */
     protected $databases = [];
 
-    /** @var DatabaseInterface */
-    private $database;
-
     /** @var array */
     protected $languages = [];
 
@@ -31,8 +28,11 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var string */
     protected $databaseIdentifier;
 
-    /** @var Generator */
-    protected $faker;
+    /** @var DatabaseInterface */
+    private $database;
+
+    /** @var Generator[] */
+    private $fakers = [];
 
     public function __construct($table, $count = 10, $databaseIdentifier = null)
     {
@@ -57,10 +57,7 @@ abstract class AbstractPopulator implements PopulatorInterface
         $this->emitEvent('start');
         $items = [];
         for ($i = 0; $i < $this->count; ++$i) {
-            $this->faker = $this->languages
-                ? Factory::create($this->languages[array_rand($this->languages)])
-                : Factory::create();
-            $data = $this->generateData();
+            $data = $this->generateData($this->getFaker());
             $data = $this->postProcessData($data);
             $item = $this->getDatabase()->insert($this->table, $data);
             $items[] = $item;
@@ -104,9 +101,9 @@ abstract class AbstractPopulator implements PopulatorInterface
         return $data;
     }
 
-    abstract protected function generateData(): array;
+    abstract protected function generateData(Generator $faker): array;
 
-    protected final function getDatabase()
+    final protected function getDatabase()
     {
         // TODO add parameter to this function - if foreign key has some other table etc.
         if ($this->database) {
@@ -123,10 +120,23 @@ abstract class AbstractPopulator implements PopulatorInterface
         throw new Exception('Database not found');
     }
 
-    protected final function emitEvent(string $eventType)
+    final protected function emitEvent(string $eventType)
     {
         foreach ($this->events as $event) {
             call_user_func([$event, $eventType]);
         }
+    }
+
+    private function getFaker()
+    {
+        $language = $this->languages
+            ? $this->languages[array_rand($this->languages)]
+            : Factory::DEFAULT_LOCALE;
+
+        if (!isset($this->fakers[$language])) {
+            $this->fakers[$language] = Factory::create($this->languages[array_rand($this->languages)]);
+        }
+
+        return $this->fakers[$language];
     }
 }

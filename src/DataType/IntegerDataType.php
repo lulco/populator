@@ -15,7 +15,9 @@ class IntegerDataType extends AbstractDataType
     {
         $total = pow(256, $this->bytes);
         $min = $column->isUnsigned() ? 0 : (-1) * $total / 2;
+        $min = max(PHP_INT_MIN, $min);
         $max = $column->isUnsigned() ? $total - 1 : $total / 2 - 1;
-        return $this->faker->numberBetween(intval($min), intval($max));
+        $max = min(PHP_INT_MAX, $max);
+        return $this->faker->numberBetween($min, $max);
     }
 }
