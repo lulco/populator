@@ -1,0 +1,22 @@
+{
+	"name": "lulco/populator",
+	"type": "library",
+	"description": "Database data populator for PHP",
+	"keywords": ["PHP", "Database", "Data"],
+	"license": "MIT",
+	"require": {
+		"php": ">=7.1.0",
+		"fzaninotto/faker": "^1.6",
+		"symfony/console": "^3.2"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^2.8",
+		"nette/database": "^2.4"
+	},
+	"suggest": {
+		"nette/database": "Allows use default database implementation (Populator\\Database\\Database)"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	}
+}
