@@ -114,7 +114,6 @@ class Database implements DatabaseInterface
 
     public function update(string $tableName, array $data, array $conditions = array()): Item
     {
-
     }
 
     private function getColumnSettings(array $column)
