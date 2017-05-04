@@ -3,6 +3,7 @@
 namespace Populator;
 
 use Exception;
+use Faker\Factory;
 use Populator\Database\DatabaseInterface;
 use Populator\Event\EventInterface;
 use Populator\Event\ProgressBarEvent;
@@ -10,7 +11,7 @@ use Populator\Event\SimpleInfoEvent;
 
 class SimplePopulatorCommand extends PopulatorCommand
 {
-    public function __construct(DatabaseInterface $database, string $language = 'en_US')
+    public function __construct(DatabaseInterface $database, string $language = Factory::DEFAULT_LOCALE)
     {
         parent::__construct();
         parent::addLanguage($language);

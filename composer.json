@@ -2,7 +2,7 @@
 	"name": "lulco/populator",
 	"type": "library",
 	"description": "Database data populator for PHP",
-	"keywords": ["PHP", "Database", "Data"],
+	"keywords": ["PHP", "Database", "Fake data"],
 	"license": "MIT",
 	"require": {
 		"php": ">=7.1.0",

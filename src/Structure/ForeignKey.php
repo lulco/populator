@@ -35,7 +35,7 @@ class ForeignKey
         return $this->referencedColumns;
     }
 
-    public function getReferencedDatabase(): string
+    public function getReferencedDatabase(): ?string
     {
         return $this->referencedDatabase;
     }

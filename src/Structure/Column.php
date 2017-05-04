@@ -34,7 +34,7 @@ class Column
 
     public function isNullable(): bool
     {
-        return isset($this->settings['nullable']) && $this->settings['nullable'] == true;
+        return isset($this->settings['nullable']) && $this->settings['nullable'] === true;
     }
 
     public function getDefault(): ?string
