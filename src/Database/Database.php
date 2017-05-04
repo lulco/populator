@@ -67,7 +67,7 @@ class Database implements DatabaseInterface
         if (isset($this->structures[$tableName])) {
             return $this->structures[$tableName];
         }
-        $table = new Table();
+        $table = new Table($tableName);
         $columns = $this->databaseContext->getStructure()->getColumns($tableName);
         foreach ($columns as $columnInfo) {
             $settings = $this->getColumnSettings($columnInfo);

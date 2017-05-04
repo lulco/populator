@@ -4,7 +4,10 @@ namespace Populator\Structure;
 
 class Table
 {
-    /** @var Column */
+    /** @var string */
+    private $name;
+
+    /** @var Column[] */
     private $columns = [];
 
     /** @var array */
@@ -13,15 +16,22 @@ class Table
     /** @var ForeignKey[] */
     private $foreignKeys = [];
 
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function addColumn(Column $column): Table
     {
         $this->columns[$column->getName()] = $column;
         return $this;
     }
 
-    /**
-     * @return Column[]
-     */
     public function getColumns(): array
     {
         return $this->columns;
@@ -40,7 +50,7 @@ class Table
 
     public function addForeignKey(ForeignKey $foreignKey): Table
     {
-        $this->foreignKeys[implode('|', $foreignKey->getColumns())] = $foreignKey;
+        $this->foreignKeys[] = $foreignKey;
         return $this;
     }
 
