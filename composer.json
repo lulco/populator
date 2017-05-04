@@ -11,7 +11,8 @@
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^2.8",
-		"nette/database": "^2.4"
+		"nette/database": "^2.4",
+		"phpunit/phpunit": "^6.1"
 	},
 	"suggest": {
 		"nette/database": "Allows use default database implementation (Populator\\Database\\Database)"
