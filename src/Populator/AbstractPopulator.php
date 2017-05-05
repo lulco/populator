@@ -51,21 +51,18 @@ abstract class AbstractPopulator implements PopulatorInterface
         return $this->table;
     }
 
-    public function populate(): array
+    public function populate(): void
     {
         $this->emitEvent('beforeStart');
         $this->emitEvent('start');
-        $items = [];
         for ($i = 0; $i < $this->count; ++$i) {
             $data = $this->generateData($this->getFaker());
             $data = $this->postProcessData($data);
-            $item = $this->getDatabase()->insert($this->table, $data);
-            $items[] = $item;
+            $this->getDatabase()->insert($this->table, $data);
             $this->emitEvent('progress');
         }
         $this->emitEvent('end');
         $this->emitEvent('afterEnd');
-        return $items;
     }
 
     public function setDatabases(array $databases): PopulatorInterface
@@ -82,6 +79,8 @@ abstract class AbstractPopulator implements PopulatorInterface
 
     public function setLanguages(array $languages): PopulatorInterface
     {
+        // TODO change this method - we can add language and also set language in configuration
+        // maybe we need method "doNotUseCommonLanguages" - common means languages defined for command
         if ($this->languages) {
             return $this;
         }

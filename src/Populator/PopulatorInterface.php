@@ -2,7 +2,6 @@
 
 namespace Populator\Populator;
 
-use Populator\Data\Item;
 use Populator\Database\DatabaseInterface;
 use Populator\Event\EventInterface;
 
@@ -44,7 +43,7 @@ interface PopulatorInterface
     public function addEvent(EventInterface $event): PopulatorInterface;
 
     /**
-     * @return Item[]
+     * @return void
      */
-    public function populate(): array;
+    public function populate(): void;
 }
