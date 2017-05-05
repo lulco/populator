@@ -41,25 +41,18 @@ class Database implements DatabaseInterface
         return $this->name;
     }
 
-    public function getRandomRecord(string $tableName, array $conditions = []): ?Item
+    public function getRandomRecord(string $tableName): ?Item
     {
         $table = $this->getStructure($tableName);
-        $where = $this->createWhere($conditions);
-        $count = $where ?
-            $this->databaseContext->table($tableName)->where($where)->count('*') :
-            $this->databaseContext->table($tableName)->count('*');
+        $count = $this->databaseContext->table($tableName)->count('*');
 
         if ($count == 0) {
             return null;
         }
 
         $offset = mt_rand(0, $count - 1);
-        $record = $this->databaseContext->table($tableName);
-        $oneRecord = $where ?
-                $record->where($where)->limit(1, $offset)->fetch() :
-                $record->limit(1, $offset)->fetch();
-
-        return $oneRecord ? new Item($table, $oneRecord->toArray()) : null;
+        $record = $this->databaseContext->table($tableName)->limit(1, $offset)->fetch();
+        return $record ? new Item($table, $record->toArray()) : null;
     }
 
     public function getStructure(string $tableName): Table
@@ -81,39 +74,40 @@ class Database implements DatabaseInterface
             $table->addForeignKey(new ForeignKey(
                 [$columnName],
                 $referencedTableName,
-                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]
+                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key
             ));
         }
         $primaryKey = $this->databaseContext->getStructure()->getPrimaryKey($tableName);
         if ($primaryKey && !is_array($primaryKey)) {
             $primaryKey = [$primaryKey];
         }
-        $table->setPrimary($primaryKey);
+        if ($primaryKey) {
+            $table->setPrimary($primaryKey);
+        }
         $this->structures[$tableName] = $table;
         return $table;
     }
 
     public function insert(string $tableName, array $data): Item
     {
-        $table = $this->getStructure($tableName);
         $record = $this->databaseContext->table($tableName)->insert($data);
         if (!$record) {
             return null;
         }
+        $table = $this->getStructure($tableName);
         if ($record instanceof ActiveRow) {
             return new Item($table, $record->toArray());
         }
         $primaryColumns = $table->getPrimary();
+        if (empty($primaryColumns)) {
+            return new Item($table, $data);
+        }
         $where = [];
         foreach ($primaryColumns as $primaryColumn) {
             $where[$primaryColumn] = $data[$primaryColumn];
         }
         $record = !empty($where) ? $this->databaseContext->table($tableName)->where($where)->fetch() : null;
         return $record ? new Item($table, $record->toArray()) : null;
-    }
-
-    public function update(string $tableName, array $data, array $conditions = array()): Item
-    {
     }
 
     private function getColumnSettings(array $column)
@@ -172,7 +166,7 @@ class Database implements DatabaseInterface
         $pattern = '/(.*?)\((.*?)\)(.*)/';
         preg_match($pattern, $fullType, $matches);
         $type = trim($matches[1]);
-        if (in_array($type, array('enum', 'set'))) {
+        if (in_array($type, ['enum', 'set'])) {
             $values = str_replace("'", '', $matches[2]);
             $extendedInfo['values'] = explode(',', $values);
         } else {
@@ -183,11 +177,5 @@ class Database implements DatabaseInterface
             }
         }
         return $extendedInfo;
-    }
-
-    private function createWhere(array $condition)
-    {
-        $where = [];
-        return $where;
     }
 }

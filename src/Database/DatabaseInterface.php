@@ -13,7 +13,5 @@ interface DatabaseInterface
 
     public function insert(string $tableName, array $data): Item;
 
-    public function update(string $tableName, array $data, array $conditions = []): Item;
-
-    public function getRandomRecord(string $tableName, array $conditions = []): ?Item;
+    public function getRandomRecord(string $tableName): ?Item;
 }
