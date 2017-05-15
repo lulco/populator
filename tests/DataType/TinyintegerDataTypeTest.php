@@ -13,6 +13,7 @@ class TinyintegerDataTypeTest extends AbstractDataTypeTest
         $dataType = new TinyintegerDataType($this->faker);
         for ($i = 0; $i < 10; ++$i) {
             $populatedData = $dataType->populate($column);
+            $this->assertTrue(is_int($populatedData));
             $this->assertGreaterThanOrEqual(-128, $populatedData);
             $this->assertLessThanOrEqual(127, $populatedData);
         }
@@ -24,6 +25,7 @@ class TinyintegerDataTypeTest extends AbstractDataTypeTest
         $dataType = new TinyintegerDataType($this->faker);
         for ($i = 0; $i < 10; ++$i) {
             $populatedData = $dataType->populate($column);
+            $this->assertTrue(is_int($populatedData));
             $this->assertGreaterThanOrEqual(-128, $populatedData);
             $this->assertLessThanOrEqual(127, $populatedData);
         }
