@@ -11,7 +11,7 @@ class IntegerDataType extends AbstractDataType
 {
     protected $bytes = 4;
 
-    public function populate(Column $column): string
+    public function populate(Column $column): int
     {
         $total = pow(256, $this->bytes);
         $min = $column->isUnsigned() ? 0 : (-1) * $total / 2;

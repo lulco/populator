@@ -9,7 +9,7 @@ class BooleanDataType extends AbstractDataType
 {
     protected $trueProbability = 50;
 
-    public function populate(Column $column): string
+    public function populate(Column $column): bool
     {
          return $this->faker->boolean($this->trueProbability);
     }

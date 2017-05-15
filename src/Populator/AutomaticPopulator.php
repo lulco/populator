@@ -42,6 +42,7 @@ class AutomaticPopulator extends AbstractPopulator
 
     private function createValue(Column $column, Generator $faker)
     {
+        // TODO return null or default automatically if some probability is set
         $dataTypeClass = $this->findDataTypeClassName($column, $faker);
         return $dataTypeClass->populate($column);
     }

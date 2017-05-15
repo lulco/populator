@@ -15,5 +15,9 @@ abstract class AbstractDataType implements DataTypeInterface
         $this->faker = $faker;
     }
 
-    abstract public function populate(Column $column): string;
+    /**
+     * @param Column $column
+     * @return mixed
+     */
+    abstract public function populate(Column $column);
 }
