@@ -35,6 +35,10 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var Generator[] */
     private $fakers = [];
 
+    private $maxRetries = 3;
+
+    private $retries = 0;
+
     public function __construct($table, $count = 10, $databaseIdentifier = null)
     {
         $this->table = $table;
@@ -63,7 +67,13 @@ abstract class AbstractPopulator implements PopulatorInterface
                 $this->getDatabase()->insert($this->table, $data);
             } catch (PDOException $e) {
                 $i--;
+                if ($this->retries == $this->maxRetries) {
+                    throw $e;
+                }
+                $this->retries++;
+                continue;
             }
+            $this->retries = 0;
             $this->emitEvent('progress');
         }
         $this->emitEvent('end');
