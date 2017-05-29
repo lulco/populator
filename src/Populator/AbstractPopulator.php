@@ -5,6 +5,7 @@ namespace Populator\Populator;
 use Exception;
 use Faker\Factory;
 use Faker\Generator;
+use PDOException;
 use Populator\Database\DatabaseInterface;
 use Populator\Event\EventInterface;
 
@@ -58,7 +59,11 @@ abstract class AbstractPopulator implements PopulatorInterface
         for ($i = 0; $i < $this->count; ++$i) {
             $data = $this->generateData($this->getFaker());
             $data = $this->postProcessData($data);
-            $this->getDatabase()->insert($this->table, $data);
+            try {
+                $this->getDatabase()->insert($this->table, $data);
+            } catch (PDOException $e) {
+                $i--;
+            }
             $this->emitEvent('progress');
         }
         $this->emitEvent('end');

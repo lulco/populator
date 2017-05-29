@@ -1,6 +1,6 @@
 <?php
 
-namespace Populator;
+namespace Populator\Command;
 
 use Exception;
 use Populator\Database\DatabaseInterface;
