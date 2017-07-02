@@ -29,9 +29,6 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var string */
     protected $databaseIdentifier;
 
-    /** @var DatabaseInterface */
-    private $database;
-
     /** @var Generator[] */
     private $fakers = [];
 
@@ -117,21 +114,16 @@ abstract class AbstractPopulator implements PopulatorInterface
 
     abstract protected function generateData(Generator $faker): array;
 
-    final protected function getDatabase()
+    final protected function getDatabase(?string $database = null): DatabaseInterface
     {
-        // TODO add parameter to this function - if foreign key has some other table etc.
-        if ($this->database) {
-            return $this->database;
+        $databaseIdentifier = $database ?: $this->databaseIdentifier;
+        if (!$databaseIdentifier) {
+            return current($this->databases);
         }
-        if ($this->databaseIdentifier === null && count($this->databases) === 1) {
-            $this->database = current($this->databases);
-            return $this->database;
+        if (!isset($this->databases[$databaseIdentifier])) {
+            throw new Exception('Datbase not found');
         }
-        if ($this->databaseIdentifier !== null && isset($this->databases[$this->databaseIdentifier])) {
-            $this->database = $this->databases[$this->databaseIdentifier];
-            return $this->database;
-        }
-        throw new Exception('Database not found');
+        return $this->databases[$databaseIdentifier];
     }
 
     final protected function emitEvent(string $eventType)

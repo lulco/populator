@@ -46,12 +46,16 @@ class Database implements DatabaseInterface
         $table = $this->getStructure($tableName);
         $count = $this->databaseContext->table($tableName)->count('*');
 
-        if ($count == 0) {
+        if ($count === 0) {
             return null;
         }
 
         $offset = mt_rand(0, $count - 1);
-        $record = $this->databaseContext->table($tableName)->limit(1, $offset)->fetch();
+        $record = $this->databaseContext->table($tableName)
+            ->order($this->databaseContext->getStructure()->getPrimaryKey($tableName))
+            ->limit(1, $offset)
+            ->fetch();
+
         return $record ? new Item($table, $record->toArray()) : null;
     }
 

@@ -37,7 +37,7 @@ class Table
         return $this->columns;
     }
 
-    public function setPrimary(array $primaryColumns = [])
+    public function setPrimary(array $primaryColumns = []): Table
     {
         $this->primaryColumns = $primaryColumns;
         return $this;

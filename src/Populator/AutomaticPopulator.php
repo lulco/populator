@@ -2,6 +2,7 @@
 
 namespace Populator\Populator;
 
+use Closure;
 use Exception;
 use Faker\Generator;
 use Populator\DataType\DataTypeInterface;
@@ -12,6 +13,22 @@ class AutomaticPopulator extends AbstractPopulator
     protected $columnNameClasses = [];
 
     protected $dataTypeClasses = [];
+
+    protected $nullableValueProbability;
+
+    protected $defaultValueProbability;
+
+    public function __construct(
+        $table,
+        $count = 10,
+        $databaseIdentifier = null,
+        $nullableValueProbability = 25,
+        $defaultValueProbability = 25
+    ) {
+        parent::__construct($table, $count, $databaseIdentifier);
+        $this->nullableValueProbability = $nullableValueProbability;
+        $this->defaultValueProbability = $defaultValueProbability;
+    }
 
     protected function generateData(Generator $faker): array
     {
@@ -42,8 +59,18 @@ class AutomaticPopulator extends AbstractPopulator
 
     private function createValue(Column $column, Generator $faker)
     {
-        // TODO return null or default automatically if some probability is set
+        if ($column->isNullable() && $faker->boolean($this->nullableValueProbability)) {
+            return null;
+        }
+
+        if ($column->getDefault() && $faker->boolean($this->defaultValueProbability)) {
+            return $column->getDefault();
+        }
+
         $dataTypeClass = $this->findDataTypeClassName($column, $faker);
+        if ($dataTypeClass instanceof Closure) {
+            return $dataTypeClass($column, $faker);
+        }
         return $dataTypeClass->populate($column);
     }
 
@@ -62,7 +89,7 @@ class AutomaticPopulator extends AbstractPopulator
             throw new Exception('Data type class for type "' . $column->getType() . '" and name "' . $column->getName() . '" not found');
         }
 
-        if ($className instanceof DataTypeInterface) {
+        if ($className instanceof DataTypeInterface || $className instanceof Closure) {
             return $className;
         }
 
