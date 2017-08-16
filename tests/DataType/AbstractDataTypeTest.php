@@ -1,6 +1,6 @@
 <?php
 
-namespace Populator\Tests\Structure;
+namespace Populator\Tests\DataType;
 
 use Faker\Factory;
 use PHPUnit\Framework\TestCase;

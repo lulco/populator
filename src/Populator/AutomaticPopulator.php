@@ -33,12 +33,12 @@ class AutomaticPopulator extends AbstractPopulator
     protected function generateData(Generator $faker): array
     {
         $database = $this->getDatabase();
-        $structure = $database->getStructure($this->table);
+        $structure = $database->getTableStructure($this->table);
 
         $data = [];
         foreach ($structure->getForeignKeys() as $foreignKey) {
-            // TODO - get database base on referenced database
-            $item = $database->getRandomRecord($foreignKey->getReferencedTable());
+            $foreignKeyDatabase = $this->getDatabase($foreignKey->getReferencedDatabase());
+            $item = $foreignKeyDatabase->getRandomRecord($foreignKey->getReferencedTable());
             $values = [];
             foreach ($foreignKey->getReferencedColumns() as $foreignColumn) {
                 $values[] = $item ? $item->getData($foreignColumn) : null;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Populator\Tests\Structure;
+namespace Populator\Tests\DataType;
 
 use Populator\DataType\BooleanDataType;
 use Populator\Structure\Column;

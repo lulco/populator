@@ -1,5 +1,8 @@
 language: php
 
+services:
+    - mysql
+	
 php:
     - 7.1
 
@@ -7,6 +10,8 @@ sudo: false
 
 before_script:
     - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
+    - mysql -e 'DROP DATABASE IF EXISTS populator;'
+    - mysql -e 'CREATE DATABASE populator;'
 
 script:
     - mkdir -p build/logs

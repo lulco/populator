@@ -7,5 +7,5 @@ interface ItemInterface
     /**
      * @return mixed
      */
-    public function getId();
+    public function getValue(string $column);
 }

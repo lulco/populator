@@ -43,7 +43,7 @@ interface PopulatorInterface
     public function addEvent(EventInterface $event): PopulatorInterface;
 
     /**
-     * @return void
+     * @return int
      */
-    public function populate(): void;
+    public function populate(): int;
 }

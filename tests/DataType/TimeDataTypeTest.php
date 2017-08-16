@@ -1,6 +1,6 @@
 <?php
 
-namespace Populator\Tests\Structure;
+namespace Populator\Tests\DataType;
 
 use Populator\DataType\TimeDataType;
 use Populator\Structure\Column;
