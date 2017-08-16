@@ -89,7 +89,7 @@ class Database implements DatabaseInterface
             $table->addForeignKey(new ForeignKey(
                 [$columnName],
                 $referencedTableName,
-                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key
+                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
             ));
         }
         $primaryKey = $this->databaseContext->getStructure()->getPrimaryKey($tableName);

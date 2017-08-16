@@ -2,21 +2,15 @@
 
 namespace Populator\Tests\Database;
 
-use PHPUnit\Framework\TestCase;
 use Populator\Data\Item;
 use Populator\Database\Database;
 use Populator\Exception\DatabaseConnectionException;
 use Populator\Exception\TableNotFoundException;
 use Populator\Structure\Column;
 use Populator\Structure\Table;
-use Populator\Tests\Behavior\CreateStructureBehavior;
 
-class DatabaseTest extends TestCase
+class DatabaseTest extends AbstractDatabaseTest
 {
-    use CreateStructureBehavior;
-
-    private $database;
-
     protected function setUp()
     {
         $this->cleanup();

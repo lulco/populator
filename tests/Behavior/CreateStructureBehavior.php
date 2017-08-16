@@ -59,6 +59,42 @@ trait CreateStructureBehavior
         );
     }
 
+    protected function createStructureWithForeignKeys()
+    {
+        $pdo = $this->getPdo(getenv('POPULATOR_MYSQL_DATABASE'));
+        $pdo->query(
+"CREATE TABLE `table_1` (
+  `id` int(11) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);"
+        );
+
+        $pdo->query(
+"CREATE TABLE `table_2` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias` (`alias`)
+);"
+        );
+
+        $pdo->query(
+"CREATE TABLE `table_3` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_t1_id` int(11) NOT NULL,
+  `fk_t2_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `table_3_ibfk_1` (`fk_t1_id`),
+  KEY `fk_t2_id` (`fk_t2_id`),
+  CONSTRAINT `table_3_ibfk_1` FOREIGN KEY (`fk_t1_id`) REFERENCES `table_1` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `table_3_ibfk_2` FOREIGN KEY (`fk_t2_id`) REFERENCES `table_2` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);"
+        );
+    }
+
     private function getPdo($database = null)
     {
         if (isset($this->pdoList[$database])) {
