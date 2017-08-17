@@ -18,17 +18,17 @@ class ProgressBarEvent extends AbstractEvent
         return $this;
     }
 
-    public function start()
+    public function start(): void
     {
         $this->progressBar->start();
     }
 
-    public function progress()
+    public function progress(): void
     {
         $this->progressBar->advance();
     }
 
-    public function end()
+    public function end(): void
     {
         $this->progressBar->finish();
         $this->output->writeln('');

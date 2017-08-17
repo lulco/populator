@@ -5,6 +5,7 @@ namespace Populator\Populator;
 use Exception;
 use Faker\Factory;
 use Faker\Generator;
+use InvalidArgumentException;
 use PDOException;
 use Populator\Database\DatabaseInterface;
 use Populator\Event\EventInterface;
@@ -53,15 +54,16 @@ abstract class AbstractPopulator implements PopulatorInterface
         return $this->table;
     }
 
-    public function populate(): void
+    public function populate(): int
     {
         $this->emitEvent('beforeStart');
         $this->emitEvent('start');
+        $inserted = 0;
         for ($i = 0; $i < $this->count; ++$i) {
             $data = $this->generateData($this->getFaker());
             $data = $this->postProcessData($data);
             try {
-                $this->getDatabase()->insert($this->table, $data);
+                $this->getDatabase()->insert($this->table, $data) ? $inserted++ : null;
             } catch (PDOException $e) {
                 $i--;
                 if ($this->retries == $this->maxRetries) {
@@ -75,10 +77,19 @@ abstract class AbstractPopulator implements PopulatorInterface
         }
         $this->emitEvent('end');
         $this->emitEvent('afterEnd');
+        return $inserted;
     }
 
     public function setDatabases(array $databases): PopulatorInterface
     {
+        if (empty($databases)) {
+            throw new InvalidArgumentException('Databases cannot be empty');
+        }
+        foreach ($databases as $database) {
+            if (!$database instanceof DatabaseInterface) {
+                throw new InvalidArgumentException('All databases must be instance of DatabaseInterface');
+            }
+        }
         $this->databases = $databases;
         return $this;
     }
@@ -135,12 +146,13 @@ abstract class AbstractPopulator implements PopulatorInterface
 
     private function getFaker()
     {
-        $language = $this->languages
-            ? $this->languages[array_rand($this->languages)]
+        $languages = $this->languages;
+        $language = $languages
+            ? $languages[array_rand($languages)]
             : Factory::DEFAULT_LOCALE;
 
         if (!isset($this->fakers[$language])) {
-            $this->fakers[$language] = Factory::create($this->languages[array_rand($this->languages)]);
+            $this->fakers[$language] = Factory::create($language);
         }
 
         return $this->fakers[$language];

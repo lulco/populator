@@ -29,7 +29,7 @@ class PopulatorCommand extends Command
         $this->setName('populator:populate');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->populators as $populator) {
             $populator->setLanguages($this->languages);

@@ -24,23 +24,23 @@ abstract class AbstractEvent implements EventInterface
         return $this;
     }
 
-    public function beforeStart()
+    public function beforeStart(): void
     {
     }
 
-    public function start()
+    public function start(): void
     {
     }
 
-    public function progress()
+    public function progress(): void
     {
     }
 
-    public function end()
+    public function end(): void
     {
     }
 
-    public function afterEnd()
+    public function afterEnd(): void
     {
     }
 }

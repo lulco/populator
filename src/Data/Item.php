@@ -2,36 +2,17 @@
 
 namespace Populator\Data;
 
-use Populator\Structure\Table;
-
 class Item implements ItemInterface
 {
-    private $table;
-
     private $data;
 
-    public function __construct(Table $table, array $data)
+    public function __construct(array $data)
     {
-        $this->table = $table;
         $this->data = $data;
     }
 
-    public function getData($column)
+    public function getValue(string $column)
     {
         return $this->data[$column] ?? null;
-    }
-
-    public function getId()
-    {
-        $primaryColumns = $this->table->getPrimary();
-        if (count($primaryColumns) === 1) {
-            $primaryColumn = current($primaryColumns);
-            return $this->data[$primaryColumn];
-        }
-        $id = [];
-        foreach ($primaryColumns as $primaryColumn) {
-            $id[$primaryColumn] = $this->data[$primaryColumn];
-        }
-        return $id;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Populator\Tests\Structure;
+namespace Populator\Tests\DataType;
 
 use DateTime;
 use Populator\DataType\DateDataType;

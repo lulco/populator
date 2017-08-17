@@ -14,8 +14,8 @@ class SimplePopulatorCommand extends PopulatorCommand
     public function __construct(DatabaseInterface $database, string $language = Factory::DEFAULT_LOCALE)
     {
         parent::__construct();
-        parent::addLanguage($language);
         parent::addDatabase($database);
+        parent::addLanguage($language);
         parent::addEvent(new SimpleInfoEvent());
         parent::addEvent(new ProgressBarEvent());
     }
