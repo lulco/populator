@@ -41,7 +41,7 @@ class AutomaticPopulator extends AbstractPopulator
             $item = $foreignKeyDatabase->getRandomRecord($foreignKey->getReferencedTable());
             $values = [];
             foreach ($foreignKey->getReferencedColumns() as $foreignColumn) {
-                $values[] = $item ? $item->getData($foreignColumn) : null;
+                $values[] = $item ? $item->getValue($foreignColumn) : null;
             }
             $data += array_combine($foreignKey->getColumns(), $values);
         }
