@@ -1,23 +1,23 @@
 {
-	"name": "lulco/populator",
-	"type": "library",
-	"description": "Database fake data populator for PHP",
-	"keywords": ["PHP", "Database", "Fake data"],
-	"license": "MIT",
-	"require": {
-		"php": ">=7.1.0",
-		"fzaninotto/faker": "^1.6",
-		"symfony/console": "^3.2",
+    "name": "lulco/populator",
+    "type": "library",
+    "description": "Database fake data populator for PHP",
+    "keywords": ["PHP", "Database", "Fake data"],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0",
+        "fzaninotto/faker": "^1.6",
+        "symfony/console": "^3.2",
         "nette/database": "^2.4"
-	},
-	"require-dev": {
-		"squizlabs/php_codesniffer": "^3.0",
-		"phpunit/phpunit": "^6.1"
-	},
-	"autoload": {
-		"classmap": ["src/"]
-	},
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpunit/phpunit": "^6.1"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    },
     "autoload-dev": {
-		"classmap": ["tests/"]
-	}
+        "classmap": ["tests/"]
+    }
 }

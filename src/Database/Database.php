@@ -72,33 +72,10 @@ class Database implements DatabaseInterface
             return $this->structures[$tableName];
         }
         $table = new Table($tableName);
-        try {
-            $columns = $this->databaseContext->getStructure()->getColumns($tableName);
-        } catch (InvalidArgumentException $e) {
-            throw new TableNotFoundException($e->getMessage(), 0, $e);
-        }
-        foreach ($columns as $columnInfo) {
-            $settings = $this->getColumnSettings($columnInfo);
-            $type = $settings['type'];
-            unset($settings['type']);
-            $table->addColumn(new Column($columnInfo['name'], $type, $settings));
-        }
+        $this->addColumnsToTable($table);
+        $this->addForeignKeysToTable($table);
+        $this->addPrimaryKeyToTable($table);
 
-        $references = $this->databaseContext->getStructure()->getBelongsToReference($tableName);
-        foreach ($references as $columnName => $referencedTableName) {
-            $table->addForeignKey(new ForeignKey(
-                [$columnName],
-                $referencedTableName,
-                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
-            ));
-        }
-        $primaryKey = $this->databaseContext->getStructure()->getPrimaryKey($tableName);
-        if ($primaryKey && !is_array($primaryKey)) {
-            $primaryKey = [$primaryKey];
-        }
-        if ($primaryKey) {
-            $table->setPrimary($primaryKey);
-        }
         $this->structures[$tableName] = $table;
         return $table;
     }
@@ -123,6 +100,47 @@ class Database implements DatabaseInterface
         }
         $record = !empty($where) ? $this->databaseContext->table($tableName)->where($where)->fetch() : null;
         return $record ? new Item($record->toArray()) : null;
+    }
+
+    private function addColumnsToTable(Table $table): void
+    {
+        try {
+            $columns = $this->databaseContext->getStructure()->getColumns($table->getName());
+        } catch (InvalidArgumentException $e) {
+            throw new TableNotFoundException($e->getMessage(), 0, $e);
+        }
+        foreach ($columns as $columnInfo) {
+            $settings = $this->getColumnSettings($columnInfo);
+            $type = $settings['type'];
+            unset($settings['type']);
+            $table->addColumn(new Column($columnInfo['name'], $type, $settings));
+        }
+    }
+
+    private function addForeignKeysToTable(Table $table): void
+    {
+        $references = $this->databaseContext->getStructure()->getBelongsToReference($table->getName());
+        if (!$references) {
+            return;
+        }
+        foreach ($references as $columnName => $referencedTableName) {
+            $table->addForeignKey(new ForeignKey(
+                [$columnName],
+                $referencedTableName,
+                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
+            ));
+        }
+    }
+
+    private function addPrimaryKeyToTable(Table $table): void
+    {
+        $primaryKey = $this->databaseContext->getStructure()->getPrimaryKey($table->getName());
+        if ($primaryKey && !is_array($primaryKey)) {
+            $primaryKey = [$primaryKey];
+        }
+        if ($primaryKey && is_array($primaryKey)) {
+            $table->setPrimary($primaryKey);
+        }
     }
 
     private function getColumnSettings(array $column)
