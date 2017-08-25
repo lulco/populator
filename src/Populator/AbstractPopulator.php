@@ -102,7 +102,7 @@ abstract class AbstractPopulator implements PopulatorInterface
 
     public function setLanguages(array $languages): PopulatorInterface
     {
-        if ($this->languages) {
+        if (!empty($this->languages)) {
             return $this;
         }
 
