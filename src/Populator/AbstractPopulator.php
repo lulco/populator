@@ -102,8 +102,6 @@ abstract class AbstractPopulator implements PopulatorInterface
 
     public function setLanguages(array $languages): PopulatorInterface
     {
-        // TODO change this method - we can add language and also set language in configuration
-        // maybe we need method "doNotUseCommonLanguages" - common means languages defined for command
         if ($this->languages) {
             return $this;
         }
