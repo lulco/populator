@@ -76,7 +76,6 @@ class AutomaticPopulator extends AbstractPopulator
 
     private function findDataTypeClassName(Column $column, Generator $faker)
     {
-        $className = null;
         if (isset($this->columnNameClasses[$column->getName()])) {
             $className = $this->columnNameClasses[$column->getName()];
         } elseif (isset($this->dataTypeClasses[$column->getType()])) {
