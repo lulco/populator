@@ -53,7 +53,7 @@ trait CreateStructureBehavior
   `pk1` int(11) NOT NULL,
   `pk2` char(36) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `is_active` int(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`pk1`,`pk2`)
 );"
         );
