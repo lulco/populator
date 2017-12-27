@@ -7,7 +7,7 @@
     "require": {
         "php": ">=7.1.0",
         "fzaninotto/faker": "^1.6",
-        "symfony/console": "^3.2",
+        "symfony/console": "^3.2|^4.0",
         "nette/database": "^2.4"
     },
     "require-dev": {
