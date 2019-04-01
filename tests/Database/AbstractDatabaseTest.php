@@ -12,7 +12,7 @@ abstract class AbstractDatabaseTest extends TestCase
 
     protected $database;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->cleanup();
         $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');

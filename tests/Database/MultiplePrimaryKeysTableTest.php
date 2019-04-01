@@ -8,7 +8,7 @@ use Populator\Structure\Table;
 
 class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->createMultiplePrimaryKeysTable();
