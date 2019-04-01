@@ -149,7 +149,7 @@ class Database implements DatabaseInterface
             'type' => $this->getType($column),
             'autoincrement' => $column['autoincrement'],
             'length' => $column['size'] ?: null,
-            'unsigned' => $column['unsigned'],
+            'unsigned' => (bool) strstr($column['vendor']['type'], 'unsigned'),
             'nullable' => $column['nullable'],
             'default' => ($column['nullable'] && $column['default'] === null) || $column['default'] !== null ? $column['default'] : null,
         ];
@@ -185,17 +185,17 @@ class Database implements DatabaseInterface
 
     private function getExtendedColumnSettings($column)
     {
-        if (!isset($column['vendor']['Type'])) {
+        if (!isset($column['vendor']['type'])) {
             return [];
         }
 
-        if (strpos($column['vendor']['Type'], '(') === false) {
+        if (strpos($column['vendor']['type'], '(') === false) {
             return [];
         }
 
         $extendedInfo = [];
 
-        $fullType = $column['vendor']['Type'];
+        $fullType = $column['vendor']['type'];
         $pattern = '/(.*?)\((.*?)\)(.*)/';
         preg_match($pattern, $fullType, $matches);
         $type = trim($matches[1]);
