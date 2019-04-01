@@ -10,7 +10,6 @@ use Nette\Database\Structure;
 use Nette\Database\Table\ActiveRow;
 use Nette\InvalidArgumentException;
 use Populator\Data\Item;
-use Populator\Database\DatabaseInterface;
 use Populator\Exception\DatabaseConnectionException;
 use Populator\Exception\TableNotFoundException;
 use Populator\Structure\Column;
