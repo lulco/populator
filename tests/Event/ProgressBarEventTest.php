@@ -26,14 +26,14 @@ class ProgressBarEventTest extends EventTest
 
         $event->progress();
         $this->assertCount(1, $output->getMessages());
-        $this->assertCount(2, $output->getMessages(0));
+        $this->assertCount(1, $output->getMessages(0));
 
         $event->end();
         $this->assertCount(1, $output->getMessages());
-        $this->assertCount(4, $output->getMessages(0));
+        $this->assertCount(3, $output->getMessages(0));
 
         $event->afterEnd();
         $this->assertCount(1, $output->getMessages());
-        $this->assertCount(4, $output->getMessages(0));
+        $this->assertCount(3, $output->getMessages(0));
     }
 }

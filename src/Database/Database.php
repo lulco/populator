@@ -65,6 +65,11 @@ class Database implements DatabaseInterface
         return $record ? new Item($record->toArray()) : null;
     }
 
+    public function getTableNames(): array
+    {
+        return array_column($this->databaseContext->getStructure()->getTables(), 'name');
+    }
+
     public function getTableStructure(string $tableName): Table
     {
         if (isset($this->structures[$tableName])) {
@@ -77,6 +82,15 @@ class Database implements DatabaseInterface
 
         $this->structures[$tableName] = $table;
         return $table;
+    }
+
+    public function getStructure(): array
+    {
+        $structure = [];
+        foreach ($this->getTableNames() as $tableName) {
+            $structure[$tableName] = $this->getTableStructure($tableName);
+        }
+        return $structure;
     }
 
     public function insert(string $tableName, array $data): ?Item
