@@ -2,7 +2,6 @@
 
 namespace Populator\Helper;
 
-use Populator\Database\DatabaseInterface;
 use Populator\Structure\Table;
 
 class TableAnalyzer
@@ -15,6 +14,8 @@ class TableAnalyzer
      */
     public function getDepths(array $structures): array
     {
+        ksort($structures);
+
         $foreignKeysInTables = [];
         $sortedTables = [];
         foreach ($structures as $tableName => $structure) {
@@ -60,5 +61,4 @@ class TableAnalyzer
         }
         return $count;
     }
-
 }
