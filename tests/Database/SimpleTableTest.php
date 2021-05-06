@@ -2,6 +2,7 @@
 
 namespace Populator\Tests\Database;
 
+use DateTime;
 use Populator\Data\Item;
 use Populator\Structure\Column;
 use Populator\Structure\Table;
@@ -114,6 +115,7 @@ class SimpleTableTest extends AbstractDatabaseTest
 
         $item1 = $this->database->insert('simple', [
             'title' => 'My title 1',
+            'created_at' => new DateTime(),
             'sorting' => 1000,
             'price' => 123.45,
         ]);
@@ -126,6 +128,7 @@ class SimpleTableTest extends AbstractDatabaseTest
 
         $item2 = $this->database->insert('simple', [
             'title' => 'My title 1',
+            'created_at' => new DateTime(),
             'type' => 'type3',
             'sorting' => 2000,
             'price' => 234.56,
@@ -146,6 +149,7 @@ class SimpleTableTest extends AbstractDatabaseTest
 
         $this->database->insert('simple', [
             'title' => 'My title 1',
+            'created_at' => new DateTime(),
             'sorting' => 1000,
             'price' => 123.45,
         ]);
@@ -159,6 +163,7 @@ class SimpleTableTest extends AbstractDatabaseTest
 
         $this->database->insert('simple', [
             'title' => 'My title 2',
+            'created_at' => new DateTime(),
             'sorting' => 2000,
             'price' => 234.56,
         ]);
