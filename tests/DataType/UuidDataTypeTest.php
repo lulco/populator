@@ -15,7 +15,7 @@ class UuidDataTypeTest extends AbstractDataTypeTest
             $populatedData = $dataType->populate($column);
             $this->assertTrue(is_string($populatedData));
             $this->assertEquals(36, strlen($populatedData));
-            $this->assertMatchesRegularExpression('/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/', $populatedData);
+            $this->assertRegExp('/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/', $populatedData);
         }
     }
 }

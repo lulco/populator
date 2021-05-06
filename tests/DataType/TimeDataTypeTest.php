@@ -15,7 +15,7 @@ class TimeDataTypeTest extends AbstractDataTypeTest
             $populatedData = $dataType->populate($column);
             $this->assertTrue(is_string($populatedData));
             $this->assertEquals(8, strlen($populatedData));
-            $this->assertMatchesRegularExpression('/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/', $populatedData);
+            $this->assertRegExp('/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/', $populatedData);
         }
     }
 }
