@@ -41,7 +41,7 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
         $populators = [];
         foreach ($tableDepths as $table => $depth) {
-            $populators[] = new AutomaticPopulator($table, pow($this->countBase, $depth + 1));
+            $populators[] = new AutomaticPopulator($table, min(1000, pow($this->countBase, $depth + 1))); // TODO think about it
         }
         return $populators;
     }

@@ -2,7 +2,6 @@
 
 namespace Populator\DataType;
 
-use Populator\DataType\AbstractDataType;
 use Populator\Structure\Column;
 
 class SetDataType extends AbstractDataType

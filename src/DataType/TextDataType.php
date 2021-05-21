@@ -2,7 +2,6 @@
 
 namespace Populator\DataType;
 
-use Populator\DataType\AbstractDataType;
 use Populator\Structure\Column;
 
 class TextDataType extends AbstractDataType

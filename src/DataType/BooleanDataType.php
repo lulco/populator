@@ -2,7 +2,6 @@
 
 namespace Populator\DataType;
 
-use Populator\DataType\AbstractDataType;
 use Populator\Structure\Column;
 
 class BooleanDataType extends AbstractDataType

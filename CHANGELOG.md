@@ -2,6 +2,10 @@
 
 ### [Unreleased][unreleased]
 
+#### Added
+- Automatic populator command based on database structure
+- New data types: timestamp, json
+
 ### [1.0.0] - 2019-04-01
 #### First stable version
 - Populator commands
