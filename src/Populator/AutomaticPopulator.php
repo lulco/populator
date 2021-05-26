@@ -10,24 +10,32 @@ use Populator\Structure\Column;
 
 class AutomaticPopulator extends AbstractPopulator
 {
-    protected $columnNameClasses = [];
-
-    protected $dataTypeClasses = [];
-
     protected $nullableValueProbability;
 
     protected $defaultValueProbability;
+
+    protected $columnNameAndTypeClasses = [];
+
+    protected $columnNameClasses = [];
+
+    protected $dataTypeClasses = [];
 
     public function __construct(
         $table,
         $count = 10,
         $databaseIdentifier = null,
         $nullableValueProbability = 25,
-        $defaultValueProbability = 25
+        $defaultValueProbability = 25,
+        $columnNameAndTypeClasses = [],
+        $columnNameClasses = [],
+        $dataTypeClasses = []
     ) {
         parent::__construct($table, $count, $databaseIdentifier);
         $this->nullableValueProbability = $nullableValueProbability;
         $this->defaultValueProbability = $defaultValueProbability;
+        $this->columnNameAndTypeClasses = $columnNameAndTypeClasses;
+        $this->columnNameClasses = $columnNameClasses;
+        $this->dataTypeClasses = $dataTypeClasses;
     }
 
     protected function generateData(Generator $faker): array
@@ -76,7 +84,9 @@ class AutomaticPopulator extends AbstractPopulator
 
     private function findDataTypeClassName(Column $column, Generator $faker)
     {
-        if (isset($this->columnNameClasses[$column->getName()])) {
+        if (isset($this->columnNameAndTypeClasses[$column->getName() . '|' . $column->getType()])) {
+            $className = $this->columnNameAndTypeClasses[$column->getName() . '|' . $column->getType()];
+        } elseif (isset($this->columnNameClasses[$column->getName()])) {
             $className = $this->columnNameClasses[$column->getName()];
         } elseif (isset($this->dataTypeClasses[$column->getType()])) {
             $className = $this->dataTypeClasses[$column->getType()];

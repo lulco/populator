@@ -12,14 +12,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AutomaticPopulatorCommand extends SimplePopulatorCommand
 {
-    private $databaseName;
+    protected $databaseName;
 
-    private $countBase;
+    protected $columnNameAndTypeClasses;
 
-    public function __construct(DatabaseInterface $database, string $language = Factory::DEFAULT_LOCALE, int $countBase = 5)
+    protected $countBase;
+
+    public function __construct(DatabaseInterface $database, array $columnNameAndTypeClasses = [], string $language = Factory::DEFAULT_LOCALE, int $countBase = 5)
     {
         parent::__construct($database, $language);
         $this->databaseName = $database->getName();
+        $this->columnNameAndTypeClasses = $columnNameAndTypeClasses;
         $this->countBase = $countBase;
     }
 
@@ -33,7 +36,7 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
      * @param DatabaseInterface $database
      * @return PopulatorInterface[]
      */
-    private function createPopulators(DatabaseInterface $database): array
+    protected function createPopulators(DatabaseInterface $database): array
     {
         $structures = $database->getStructure();
         $tableAnalyzer = new TableAnalyzer();
@@ -41,7 +44,7 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
         $populators = [];
         foreach ($tableDepths as $table => $depth) {
-            $populators[] = new AutomaticPopulator($table, min(1000, pow($this->countBase, $depth + 1))); // TODO think about it
+            $populators[] = new AutomaticPopulator($table, min(1000, pow($this->countBase, $depth + 1)), null, 25, 25, $this->columnNameAndTypeClasses); // TODO think about count parameter
         }
         return $populators;
     }
