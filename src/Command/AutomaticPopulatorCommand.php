@@ -16,7 +16,7 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
     protected $ignoreTables = [];
 
-    protected $skipNonEmptyTables = [];
+    protected $skipNonEmptyTables;
 
     protected $columnNameAndTypeClasses = [];
 
