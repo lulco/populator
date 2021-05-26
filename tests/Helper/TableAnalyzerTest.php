@@ -107,6 +107,6 @@ class TableAnalyzerTest extends TestCase
 
         $tableDepths = $this->tableAnalyzer->getDepths($structures);
         $this->assertEquals(['table_1', 'table_2', 'table_3'], array_keys($tableDepths));
-        $this->assertEquals(['table_1' => 0, 'table_2' => 1, 'table_3' => 3], $tableDepths);
+        $this->assertEquals(['table_1' => 0, 'table_2' => 1, 'table_3' => 2], $tableDepths);
     }
 }

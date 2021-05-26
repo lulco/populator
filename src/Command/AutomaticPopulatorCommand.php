@@ -18,12 +18,20 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
     protected $countBase;
 
-    public function __construct(DatabaseInterface $database, array $columnNameAndTypeClasses = [], string $language = Factory::DEFAULT_LOCALE, int $countBase = 5)
-    {
+    private $maxCountPerTable;
+
+    public function __construct(
+        DatabaseInterface $database,
+        array $columnNameAndTypeClasses = [],
+        string $language = Factory::DEFAULT_LOCALE,
+        int $countBase = 5,
+        int $maxCountPerTable = 125
+    ) {
         parent::__construct($database, $language);
         $this->databaseName = $database->getName();
         $this->columnNameAndTypeClasses = $columnNameAndTypeClasses;
         $this->countBase = $countBase;
+        $this->maxCountPerTable = $maxCountPerTable;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -44,7 +52,8 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
         $populators = [];
         foreach ($tableDepths as $table => $depth) {
-            $populators[] = new AutomaticPopulator($table, min(1000, pow($this->countBase, $depth + 1)), null, 25, 25, $this->columnNameAndTypeClasses); // TODO think about count parameter
+            $count = min($this->maxCountPerTable, pow($this->countBase, $depth + 1));
+            $populators[] = new AutomaticPopulator($table, $count, null, 25, 25, $this->columnNameAndTypeClasses);
         }
         return $populators;
     }

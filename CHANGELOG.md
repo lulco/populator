@@ -4,6 +4,7 @@
 
 #### Added
 - Automatic populator command based on database structure
+- Column name + type custom classes for AutomaticPopulator
 - New data types: timestamp, json
 
 ### [1.0.0] - 2019-04-01

@@ -43,7 +43,7 @@ class TableAnalyzer
                     if ($diff === [$tableName]) {
                         $sortedTables[$tableName] = 1;
                     } else {
-                        $sortedTables[$tableName] = $this->getCountOfForeignKeys($foreignKeysInTables, $foreignKeysTables);
+                        $sortedTables[$tableName] = $this->getCountOfForeignKeys($foreignKeysTables, $sortedTables);
                     }
                     $skipTables[] = $tableName;
                     break;
@@ -53,12 +53,12 @@ class TableAnalyzer
         return $sortedTables;
     }
 
-    private function getCountOfForeignKeys(array $foreignKeysInTables, array $tables): int
+    private function getCountOfForeignKeys(array $foreignKeysTables, array $sortedTables): int
     {
-        $count = count($tables);
-        foreach ($tables as $table) {
-            $count += $this->getCountOfForeignKeys($foreignKeysInTables, $foreignKeysInTables[$table] ?? []);
+        $counts = [];
+        foreach ($foreignKeysTables as $foreignKeysTable) {
+            $counts[] = $sortedTables[$foreignKeysTable] ?? 0;
         }
-        return $count;
+        return max($counts) + 1;
     }
 }
