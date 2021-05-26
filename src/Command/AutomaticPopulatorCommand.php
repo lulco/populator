@@ -14,14 +14,20 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 {
     protected $databaseName;
 
-    protected $columnNameAndTypeClasses;
+    protected $ignoreTables = [];
+
+    protected $skipNonEmptyTables = [];
+
+    protected $columnNameAndTypeClasses = [];
 
     protected $countBase;
 
-    private $maxCountPerTable;
+    protected $maxCountPerTable;
 
     public function __construct(
         DatabaseInterface $database,
+        array $ignoreTables = [],
+        bool $skipNonEmptyTables = true,
         array $columnNameAndTypeClasses = [],
         string $language = Factory::DEFAULT_LOCALE,
         int $countBase = 5,
@@ -29,6 +35,8 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
     ) {
         parent::__construct($database, $language);
         $this->databaseName = $database->getName();
+        $this->ignoreTables = $ignoreTables;
+        $this->skipNonEmptyTables = $skipNonEmptyTables;
         $this->columnNameAndTypeClasses = $columnNameAndTypeClasses;
         $this->countBase = $countBase;
         $this->maxCountPerTable = $maxCountPerTable;
@@ -52,6 +60,12 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
 
         $populators = [];
         foreach ($tableDepths as $table => $depth) {
+            if (in_array($table, $this->ignoreTables)) {
+                continue;
+            }
+            if ($this->skipNonEmptyTables === true && $database->getRandomRecord($table) !== null) {
+                continue;
+            }
             $count = min($this->maxCountPerTable, pow($this->countBase, $depth + 1));
             $populators[] = new AutomaticPopulator($table, $count, null, 25, 25, $this->columnNameAndTypeClasses);
         }
