@@ -2,6 +2,12 @@
 
 ### [Unreleased][unreleased]
 
+#### Changed
+- Do not throw exception when max retries is reached
+
+#### Added
+- Ignore and skip tables in automatic populator command
+
 ### [1.1.0] - 2021-05-26
 #### Added
 - Automatic populator command based on database structure

@@ -21,14 +21,14 @@ class AutomaticPopulator extends AbstractPopulator
     protected $dataTypeClasses = [];
 
     public function __construct(
-        $table,
-        $count = 10,
-        $databaseIdentifier = null,
-        $nullableValueProbability = 25,
-        $defaultValueProbability = 25,
-        $columnNameAndTypeClasses = [],
-        $columnNameClasses = [],
-        $dataTypeClasses = []
+        string $table,
+        int $count = 10,
+        ?string $databaseIdentifier = null,
+        int $nullableValueProbability = 25,
+        int $defaultValueProbability = 25,
+        array $columnNameAndTypeClasses = [],
+        array $columnNameClasses = [],
+        array $dataTypeClasses = []
     ) {
         parent::__construct($table, $count, $databaseIdentifier);
         $this->nullableValueProbability = $nullableValueProbability;

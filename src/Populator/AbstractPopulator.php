@@ -33,11 +33,13 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var Generator[] */
     private $fakers = [];
 
+    /** @var int */
     private $maxRetries = 3;
 
+    /** @var int */
     private $retries = 0;
 
-    public function __construct($table, $count = 10, $databaseIdentifier = null)
+    public function __construct(string $table, int $count = 10, ?string $databaseIdentifier = null)
     {
         $this->table = $table;
         $this->count = $count;
@@ -66,8 +68,8 @@ abstract class AbstractPopulator implements PopulatorInterface
                 $this->getDatabase()->insert($this->table, $data) ? $inserted++ : null;
             } catch (PDOException $e) {
                 $i--;
-                if ($this->retries == $this->maxRetries) {
-                    throw $e;
+                if ($this->retries === $this->maxRetries) {
+                    break;
                 }
                 $this->retries++;
                 continue;
@@ -135,14 +137,14 @@ abstract class AbstractPopulator implements PopulatorInterface
         return $this->databases[$databaseIdentifier];
     }
 
-    final protected function emitEvent(string $eventType)
+    final protected function emitEvent(string $eventType): void
     {
         foreach ($this->events as $event) {
             call_user_func([$event, $eventType]);
         }
     }
 
-    private function getFaker()
+    private function getFaker(): Generator
     {
         $languages = $this->languages;
         $language = $languages
