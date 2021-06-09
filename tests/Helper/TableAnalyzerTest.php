@@ -109,4 +109,20 @@ class TableAnalyzerTest extends TestCase
         $this->assertEquals(['table_1', 'table_2', 'table_3'], array_keys($tableDepths));
         $this->assertEquals(['table_1' => 0, 'table_2' => 1, 'table_3' => 2], $tableDepths);
     }
+
+    public function testMultipleSelfForeignKeys(): void
+    {
+        $structures = [
+            'pages' => (new Table('pages'))
+                ->addColumn(new Column('id', 'int', ['autoincrement' => true]))
+                ->addColumn(new Column('parent_id', 'int', ['nullable' => true]))
+                ->addColumn(new Column('shortcut_id', 'int', ['nullable' => true]))
+                ->addForeignKey(new ForeignKey(['parent_id'], 'pages', ['id']))
+                ->addForeignKey(new ForeignKey(['shortcut_id'], 'pages', ['id'])),
+        ];
+
+        $tableDepths = $this->tableAnalyzer->getDepths($structures);
+        $this->assertEquals(['pages'], array_keys($tableDepths));
+        $this->assertEquals(['pages' => 3], $tableDepths);
+    }
 }

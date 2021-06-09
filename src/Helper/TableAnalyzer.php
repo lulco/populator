@@ -39,9 +39,10 @@ class TableAnalyzer
                     continue;
                 }
                 $diff = array_diff($foreignKeysTables, array_keys($sortedTables));
-                if ($diff === [] || $diff === [$tableName]) {
-                    if ($diff === [$tableName]) {
-                        $sortedTables[$tableName] = 1;
+                $uniqueDiff = array_unique($diff);
+                if ($diff === [] || $uniqueDiff === [$tableName]) {
+                    if ($uniqueDiff === [$tableName]) {
+                        $sortedTables[$tableName] = count($diff) + 1;
                     } else {
                         $sortedTables[$tableName] = $this->getCountOfForeignKeys($foreignKeysTables, $sortedTables);
                     }
