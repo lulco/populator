@@ -39,7 +39,7 @@ class TableAnalyzer
                     continue;
                 }
                 $diff = array_diff($foreignKeysTables, array_keys($sortedTables));
-                $uniqueDiff = array_unique($diff);
+                $uniqueDiff = array_values(array_unique($diff));
                 if ($diff === [] || $uniqueDiff === [$tableName]) {
                     if ($uniqueDiff === [$tableName]) {
                         $sortedTables[$tableName] = count($diff) + 1;
