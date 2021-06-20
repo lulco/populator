@@ -10,7 +10,7 @@ class DatabaseTest extends AbstractDatabaseTest
 {
     public function testWrongCredentials()
     {
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');
+        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');
         $this->expectException(DatabaseConnectionException::class);
         $this->expectExceptionMessage("SQLSTATE[HY000] [1045] Access denied for user '" . getenv('POPULATOR_MYSQL_USERNAME') . "'@'" . getenv('POPULATOR_MYSQL_HOST') . "' (using password: YES)");
         new Database(getenv('POPULATOR_MYSQL_DATABASE'), $dsn, getenv('POPULATOR_MYSQL_USERNAME'), 'wrong_password');

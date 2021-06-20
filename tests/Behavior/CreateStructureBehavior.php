@@ -101,7 +101,7 @@ trait CreateStructureBehavior
             return $this->pdoList[$database];
         }
 
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST');
+        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT');
         if ($database) {
             $dsn .= ';dbname=' . $database;
         }

@@ -2,6 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php">
     <php>
         <env name="POPULATOR_MYSQL_HOST" value="localhost"/>
+        <env name="POPULATOR_MYSQL_PORT" value="3306"/>
         <env name="POPULATOR_MYSQL_USERNAME" value="root"/>
         <env name="POPULATOR_MYSQL_PASSWORD" value=""/>
         <env name="POPULATOR_MYSQL_DATABASE" value="populator"/>
