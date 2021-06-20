@@ -6,7 +6,7 @@ use Populator\Structure\Column;
 
 class TimestampDataType extends AbstractDataType
 {
-    public function populate(Column $column): string
+    public function populate(Column $column): int
     {
         return $this->faker->unixTime();
     }
