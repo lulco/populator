@@ -9,6 +9,7 @@ use Populator\Structure\Column;
  */
 class IntegerDataType extends AbstractDataType
 {
+    /** @var int */
     protected $bytes = 4;
 
     public function populate(Column $column): int

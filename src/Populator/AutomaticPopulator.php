@@ -10,14 +10,19 @@ use Populator\Structure\Column;
 
 class AutomaticPopulator extends AbstractPopulator
 {
+    /** @var int  */
     protected $nullableValueProbability;
 
+    /** @var int  */
     protected $defaultValueProbability;
 
+    /** @var array  */
     protected $columnNameAndTypeClasses = [];
 
+    /** @var array  */
     protected $columnNameClasses = [];
 
+    /** @var array  */
     protected $dataTypeClasses = [];
 
     public function __construct(
@@ -65,6 +70,12 @@ class AutomaticPopulator extends AbstractPopulator
         return $data;
     }
 
+    /**
+     * @param Column $column
+     * @param Generator $faker
+     * @return mixed
+     * @throws Exception
+     */
     private function createValue(Column $column, Generator $faker)
     {
         if ($column->isNullable() && $faker->boolean($this->nullableValueProbability)) {
@@ -82,6 +93,12 @@ class AutomaticPopulator extends AbstractPopulator
         return $dataTypeClass->populate($column);
     }
 
+    /**
+     * @param Column $column
+     * @param Generator $faker
+     * @return Closure|DataTypeInterface
+     * @throws Exception
+     */
     private function findDataTypeClassName(Column $column, Generator $faker)
     {
         if (isset($this->columnNameAndTypeClasses[$column->getName() . '|' . $column->getType()])) {

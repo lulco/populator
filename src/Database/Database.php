@@ -18,10 +18,13 @@ use Populator\Structure\Table;
 
 class Database implements DatabaseInterface
 {
+    /** @var string  */
     private $name;
 
+    /** @var Context  */
     private $databaseContext;
 
+    /** @var array<string, Table>  */
     private $structures = [];
 
     public function __construct(
@@ -156,7 +159,7 @@ class Database implements DatabaseInterface
         }
     }
 
-    private function getColumnSettings(array $column)
+    private function getColumnSettings(array $column): array
     {
         $info = [
             'type' => $this->getType($column),
@@ -171,7 +174,7 @@ class Database implements DatabaseInterface
         return array_merge($info, $extendedInfo);
     }
 
-    private function getType(array $column)
+    private function getType(array $column): string
     {
         $type = strtolower($column['nativetype']);
         $types = [
@@ -196,7 +199,7 @@ class Database implements DatabaseInterface
         return $type;
     }
 
-    private function getExtendedColumnSettings($column)
+    private function getExtendedColumnSettings(array $column): array
     {
         if (!isset($column['vendor']['type'])) {
             return [];

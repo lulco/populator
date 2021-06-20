@@ -27,7 +27,7 @@ abstract class AbstractPopulator implements PopulatorInterface
     /** @var int */
     protected $count;
 
-    /** @var string */
+    /** @var string|null */
     protected $databaseIdentifier;
 
     /** @var Generator[] */
@@ -129,7 +129,11 @@ abstract class AbstractPopulator implements PopulatorInterface
     {
         $databaseIdentifier = $database ?: $this->databaseIdentifier;
         if (!$databaseIdentifier) {
-            return current($this->databases);
+            $currentDatabase = current($this->databases);
+            if (!$currentDatabase) {
+                throw new Exception('No current database found');
+            }
+            return $currentDatabase;
         }
         if (!isset($this->databases[$databaseIdentifier])) {
             throw new Exception('Datbase not found');
@@ -140,7 +144,10 @@ abstract class AbstractPopulator implements PopulatorInterface
     final protected function emitEvent(string $eventType): void
     {
         foreach ($this->events as $event) {
-            call_user_func([$event, $eventType]);
+            $callback =[$event, $eventType];
+            if (is_callable($callback)) {
+                call_user_func($callback);
+            }
         }
     }
 

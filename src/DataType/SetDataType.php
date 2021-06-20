@@ -8,7 +8,7 @@ class SetDataType extends AbstractDataType
 {
     public function populate(Column $column): string
     {
-        $availableValues = $column->getValues();
+        $availableValues = $column->getValues() ?: [];
         $count = mt_rand(1, count($availableValues));
         if ($count == count($availableValues)) {
             return implode(',', $availableValues);

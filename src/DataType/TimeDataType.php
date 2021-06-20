@@ -6,6 +6,7 @@ use Populator\Structure\Column;
 
 class TimeDataType extends AbstractDataType
 {
+    /** @var string */
     protected $format = 'H:i:s';
 
     public function populate(Column $column): string

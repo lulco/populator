@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractEvent implements EventInterface
 {
+    /** @var PopulatorInterface */
     protected $populator;
 
     /** @var InputInterface */

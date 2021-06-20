@@ -24,7 +24,7 @@ class PopulatorCommand extends Command
     /** @var EventInterface[] */
     protected $events = [];
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName('populator:populate');
     }

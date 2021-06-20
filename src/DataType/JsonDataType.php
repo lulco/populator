@@ -8,6 +8,6 @@ class JsonDataType extends AbstractDataType
 {
     public function populate(Column $column): string
     {
-        return json_encode([]);
+        return (string)json_encode([]);
     }
 }

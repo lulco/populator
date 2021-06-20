@@ -12,16 +12,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AutomaticPopulatorCommand extends SimplePopulatorCommand
 {
+    /** @var string */
     protected $databaseName;
 
+    /** @var array */
     protected $ignoreTables = [];
 
+    /** @var bool */
     protected $skipNonEmptyTables;
 
+    /** @var array */
     protected $columnNameAndTypeClasses = [];
 
+    /** @var int */
     protected $countBase;
 
+    /** @var int */
     protected $maxCountPerTable;
 
     public function __construct(
