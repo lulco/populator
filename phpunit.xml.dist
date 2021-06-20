@@ -5,8 +5,8 @@
         <env name="POPULATOR_MYSQL_USERNAME" value="root"/>
         <env name="POPULATOR_MYSQL_PASSWORD" value=""/>
         <env name="POPULATOR_MYSQL_DATABASE" value="populator"/>
-        <env name="POPULATOR_MYSQL_CHARSET" value="utf8"/>
-        <env name="POPULATOR_MYSQL_COLLATION" value="utf8_general_ci"/>
+        <env name="POPULATOR_MYSQL_CHARSET" value="utf8mb4"/>
+        <env name="POPULATOR_MYSQL_COLLATION" value="utf8mb4_general_ci"/>
     </php>
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>

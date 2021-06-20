@@ -25,13 +25,6 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      postgres:
-        image: postgres:10
-        env:
-          POSTGRES_PASSWORD: 123
-        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
-        ports:
-          - 5432
 
     steps:
       - name: Checkout code
@@ -54,5 +47,3 @@ jobs:
           POPULATOR_MYSQL_HOST: 127.0.0.1
           POPULATOR_MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
           POPULATOR_MYSQL_PASSWORD: 123
-          POPULATOR_PGSQL_PORT: ${{ job.services.postgres.ports[5432] }}
-          POPULATOR_PGSQL_PASSWORD: 123
