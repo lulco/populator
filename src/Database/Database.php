@@ -114,7 +114,7 @@ class Database implements DatabaseInterface
         foreach ($primaryColumns as $primaryColumn) {
             $where[$primaryColumn] = $data[$primaryColumn];
         }
-        $record = $this->databaseContext->table($tableName)->where($where)->fetch();
+        $record = $this->databaseContext->table($tableName)->wherePrimary($where)->fetch();
         return $record ? new Item($record->toArray()) : null;
     }
 
