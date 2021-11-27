@@ -123,6 +123,10 @@ class AutomaticPopulator extends AbstractPopulator
             throw new Exception('Data type "' . $className . '" doesn\'t exist');
         }
 
-        return new $className($faker);
+        $class = new $className($faker);
+        if (!$class instanceof DataTypeInterface) {
+            throw new Exception('Class "' . $class . '" is not type of '  . DataTypeInterface::class);
+        }
+        return $class;
     }
 }

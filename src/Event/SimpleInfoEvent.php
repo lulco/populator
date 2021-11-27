@@ -16,6 +16,6 @@ class SimpleInfoEvent extends AbstractEvent
     public function afterEnd(): void
     {
         $this->output->writeln('<comment>Done. Took ' . sprintf('%.4fs', microtime(true) - $this->startTime) . '</comment>');
-        $this->output->writeln('');
+        $this->output->writeln("\n");
     }
 }
