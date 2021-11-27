@@ -4,6 +4,7 @@
 
 #### Changed
 - Do not throw exception when max retries is reached
+- Replaced abandoned fzaninotto/faker with fakerphp/faker
 
 #### Added
 - Ignore and skip tables in automatic populator command
