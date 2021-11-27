@@ -144,7 +144,7 @@ abstract class AbstractPopulator implements PopulatorInterface
     final protected function emitEvent(string $eventType): void
     {
         foreach ($this->events as $event) {
-            $callback =[$event, $eventType];
+            $callback = [$event, $eventType];
             if (is_callable($callback)) {
                 call_user_func($callback);
             }
