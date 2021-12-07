@@ -8,7 +8,7 @@
         "php": ">=7.1.0",
         "ext-json": "*",
         "ext-pdo": "*",
-        "fakerphp/faker": "^1.16",
+        "fzaninotto/faker": "^1.9",
         "symfony/console": "^4.2 | ^5.0",
         "nette/database": "^3.0"
     },
