@@ -3,96 +3,97 @@
 namespace Populator\Tests\Behavior;
 
 use PDO;
+use Phoenix\Database\Adapter\MysqlAdapter;
+use Phoenix\Database\Adapter\PgsqlAdapter;
+use Phoenix\Database\Element\ForeignKey;
+use Phoenix\Database\Element\Index;
+use Phoenix\Database\Element\MigrationTable;
+use Phoenix\Database\QueryBuilder\MysqlQueryBuilder;
+use Phoenix\Database\QueryBuilder\PgsqlQueryBuilder;
 
 trait CreateStructureBehavior
 {
-    private $pdoList = [];
+    /** @var array<string, PDO>  */
+    private array $pdoList = [];
 
-    protected function cleanup()
+    protected function cleanup(): void
     {
         $pdo = $this->getPdo();
-        $database = getenv('POPULATOR_MYSQL_DATABASE');
-        $charset = getenv('POPULATOR_MYSQL_CHARSET');
-        $collation = getenv('POPULATOR_MYSQL_COLLATION');
-        $pdo->query(sprintf('DROP DATABASE IF EXISTS `%s`;', $database));
-        $pdo->query(sprintf('CREATE DATABASE `%s` CHARACTER SET %s COLLATE %s;', $database, $charset, $collation));
+        $adapter = getenv('POPULATOR_ADAPTER');
+        $database = getenv('POPULATOR_DATABASE');
+        $charset = getenv('POPULATOR_CHARSET');
+        $collation = getenv('POPULATOR_COLLATION');
+        if ($adapter === 'pgsql') {
+            $pdo->query(sprintf("SELECT pg_terminate_backend (pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s'", $database));
+            $pdo->query(sprintf('DROP DATABASE IF EXISTS %s', $database));
+            $pdo->query(sprintf("SELECT pg_terminate_backend (pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '%s'", $database));
+            $pdo->query(sprintf('CREATE DATABASE %s', $database));
+        } else {
+            $pdo->query(sprintf('DROP DATABASE IF EXISTS `%s`;', $database));
+            $pdo->query(sprintf('CREATE DATABASE `%s` CHARACTER SET %s COLLATE %s;', $database, $charset, $collation));
+        }
     }
 
-    protected function createSimpleTable()
+    protected function createSimpleTable(): void
     {
-        $pdo = $this->getPdo(getenv('POPULATOR_MYSQL_DATABASE'));
-        $pdo->query(
-"CREATE TABLE `simple` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_at` datetime NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `type` enum('type1','type2','type3') DEFAULT 'type1',
-  `sorting` int(10) unsigned DEFAULT NULL,
-  `price` double(10,2) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-);"
-        );
+        $migrationTable = (new MigrationTable('simple'))
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('title', 'string')
+            ->addColumn('type', 'string', ['null' => true, 'default' => 'type1'])
+            ->addColumn('sorting', 'integer', ['null' => true, 'length' => 10])
+            ->addColumn('price', 'double', ['length' => 10, 'decimals' => 2])
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
     }
 
-    protected function createNoPrimaryKeysTable()
+    protected function createNoPrimaryKeysTable(): void
     {
-        $pdo = $this->getPdo(getenv('POPULATOR_MYSQL_DATABASE'));
-        $pdo->query(
-"CREATE TABLE `no_primary_key` (
-  `meta_key` varchar(255) NOT NULL,
-  `meta_value` varchar(255) DEFAULT NULL
-);"
-        );
+        $migrationTable = (new MigrationTable('no_primary_key', false))
+            ->addColumn('meta_key', 'string')
+            ->addColumn('meta_value', 'string', ['null' => true])
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
     }
 
     protected function createMultiplePrimaryKeysTable()
     {
-        $pdo = $this->getPdo(getenv('POPULATOR_MYSQL_DATABASE'));
-        $pdo->query(
-"CREATE TABLE `multiple_primary_keys` (
-  `pk1` int(11) NOT NULL,
-  `pk2` char(36) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pk1`,`pk2`)
-);"
-        );
+        $migrationTable = (new MigrationTable('multiple_primary_keys', ['pk1', 'pk2']))
+            ->addColumn('pk1', 'integer')
+            ->addColumn('pk2', 'uuid')
+            ->addColumn('title', 'string')
+            ->addColumn('is_active', 'boolean', ['default' => false])
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
     }
 
     protected function createStructureWithForeignKeys()
     {
-        $pdo = $this->getPdo(getenv('POPULATOR_MYSQL_DATABASE'));
-        $pdo->query(
-"CREATE TABLE `table_1` (
-  `id` int(11) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);"
-        );
+        $migrationTable = (new MigrationTable('table_1'))
+            ->addColumn('is_active', 'boolean')
+            ->addColumn('title', 'string')
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
 
-        $pdo->query(
-"CREATE TABLE `table_2` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `alias` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `alias` (`alias`)
-);"
-        );
+        $migrationTable = (new MigrationTable('table_2'))
+            ->addColumn('title', 'string')
+            ->addColumn('alias', 'string')
+            ->addIndex('alias', Index::TYPE_UNIQUE)
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
 
-        $pdo->query(
-"CREATE TABLE `table_3` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_t1_id` int(11) NOT NULL,
-  `fk_t2_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `table_3_ibfk_1` (`fk_t1_id`),
-  KEY `fk_t2_id` (`fk_t2_id`),
-  CONSTRAINT `table_3_ibfk_1` FOREIGN KEY (`fk_t1_id`) REFERENCES `table_1` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `table_3_ibfk_2` FOREIGN KEY (`fk_t2_id`) REFERENCES `table_2` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-);"
-        );
+        $migrationTable = (new MigrationTable('table_3'))
+            ->addColumn('fk_t1_id', 'integer')
+            ->addColumn('fk_t2_id', 'integer')
+            ->addForeignKey('fk_t1_id', 'table_1', 'id', ForeignKey::CASCADE, ForeignKey::CASCADE)
+            ->addForeignKey('fk_t2_id', 'table_2', 'id', ForeignKey::CASCADE, ForeignKey::CASCADE)
+        ;
+        $migrationTable->create();
+        $this->createAndExecuteQueries($migrationTable);
     }
 
     private function getPdo($database = null)
@@ -101,13 +102,29 @@ trait CreateStructureBehavior
             return $this->pdoList[$database];
         }
 
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT');
+        $dsn = getenv('POPULATOR_ADAPTER') . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT');
         if ($database) {
             $dsn .= ';dbname=' . $database;
         }
-        $pdo = new PDO($dsn, getenv('POPULATOR_MYSQL_USERNAME'), getenv('POPULATOR_MYSQL_PASSWORD'));
+        $pdo = new PDO($dsn, getenv('POPULATOR_USERNAME'), getenv('POPULATOR_PASSWORD'));
         $this->pdoList[$database] = $pdo;
 
         return $pdo;
+    }
+
+    private function createAndExecuteQueries(MigrationTable $migrationTable): void
+    {
+        $pdo = $this->getPdo(getenv('POPULATOR_DATABASE'));
+        $adapter = getenv('POPULATOR_ADAPTER');
+        if ($adapter === 'pgsql') {
+            $queryBuilder = new PgsqlQueryBuilder(new PgsqlAdapter($pdo));
+        } else {
+            $queryBuilder = new MysqlQueryBuilder(new MysqlAdapter($pdo));
+        }
+
+        $queries = $queryBuilder->createTable($migrationTable);
+        foreach ($queries as $query) {
+            $pdo->query($query);
+        }
     }
 }

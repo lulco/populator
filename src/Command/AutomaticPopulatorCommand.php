@@ -12,23 +12,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AutomaticPopulatorCommand extends SimplePopulatorCommand
 {
-    /** @var string */
-    protected $databaseName;
+    protected string $databaseName;
+
+    /** @var string[] */
+    protected array $ignoreTables = [];
+
+    protected bool $skipNonEmptyTables;
 
     /** @var array */
-    protected $ignoreTables = [];
+    protected array $columnNameAndTypeClasses = [];
 
-    /** @var bool */
-    protected $skipNonEmptyTables;
+    protected int $countBase;
 
-    /** @var array */
-    protected $columnNameAndTypeClasses = [];
-
-    /** @var int */
-    protected $countBase;
-
-    /** @var int */
-    protected $maxCountPerTable;
+    protected int $maxCountPerTable;
 
     public function __construct(
         DatabaseInterface $database,
@@ -55,7 +51,6 @@ class AutomaticPopulatorCommand extends SimplePopulatorCommand
     }
 
     /**
-     * @param DatabaseInterface $database
      * @return PopulatorInterface[]
      */
     protected function createPopulators(DatabaseInterface $database): array

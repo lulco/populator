@@ -1,3 +1,6 @@
 parameters:
     inferPrivatePropertyTypeFromConstructor: true
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: true
+    ignoreErrors:
+        - '#Parameter \#2 \$cacheStorage of class Nette\\Database\\Structure constructor expects Nette\\Caching\\IStorage, Nette\\Caching\\Storages\\MemoryStorage given\.#'

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php">
     <php>
-        <env name="POPULATOR_MYSQL_HOST" value="localhost"/>
-        <env name="POPULATOR_MYSQL_PORT" value="3306"/>
-        <env name="POPULATOR_MYSQL_USERNAME" value="root"/>
-        <env name="POPULATOR_MYSQL_PASSWORD" value=""/>
-        <env name="POPULATOR_MYSQL_DATABASE" value="populator"/>
-        <env name="POPULATOR_MYSQL_CHARSET" value="utf8mb4"/>
-        <env name="POPULATOR_MYSQL_COLLATION" value="utf8mb4_general_ci"/>
+        <env name="POPULATOR_ADAPTER" value="mysql"/>
+        <env name="POPULATOR_HOST" value="localhost"/>
+        <env name="POPULATOR_PORT" value="3306"/>
+        <env name="POPULATOR_USERNAME" value="root"/>
+        <env name="POPULATOR_PASSWORD" value=""/>
+        <env name="POPULATOR_DATABASE" value="populator"/>
+        <env name="POPULATOR_CHARSET" value="utf8mb4"/>
+        <env name="POPULATOR_COLLATION" value="utf8mb4_general_ci"/>
     </php>
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>

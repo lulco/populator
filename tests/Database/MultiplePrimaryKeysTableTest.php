@@ -34,9 +34,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertFalse($pk1Column->isAutoincrement());
         $this->assertFalse($pk1Column->isNullable());
         $this->assertNull($pk1Column->getDefault());
-        $this->assertEquals(11, $pk1Column->getLength());
         $this->assertNull($pk1Column->getDecimals());
-        $this->assertFalse($pk1Column->isUnsigned());
         $this->assertNull($pk1Column->getValues());
 
         $this->assertArrayHasKey('pk2', $columns);
@@ -48,9 +46,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertFalse($pk2Column->isAutoincrement());
         $this->assertFalse($pk2Column->isNullable());
         $this->assertNull($pk2Column->getDefault());
-        $this->assertEquals(36, $pk2Column->getLength());
         $this->assertNull($pk2Column->getDecimals());
-        $this->assertFalse($pk2Column->isUnsigned());
         $this->assertNull($pk2Column->getValues());
 
         $this->assertArrayHasKey('title', $columns);
@@ -62,9 +58,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertFalse($titleColumn->isAutoincrement());
         $this->assertFalse($titleColumn->isNullable());
         $this->assertNull($titleColumn->getDefault());
-        $this->assertEquals(255, $titleColumn->getLength());
         $this->assertNull($titleColumn->getDecimals());
-        $this->assertFalse($titleColumn->isUnsigned());
         $this->assertNull($titleColumn->getValues());
 
         $this->assertArrayHasKey('is_active', $columns);
@@ -75,10 +69,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertEquals('boolean', $activeColumn->getType());
         $this->assertFalse($activeColumn->isAutoincrement());
         $this->assertFalse($activeColumn->isNullable());
-        $this->assertEquals(0, $activeColumn->getDefault());
-        $this->assertEquals(1, $activeColumn->getLength());
         $this->assertNull($activeColumn->getDecimals());
-        $this->assertFalse($activeColumn->isUnsigned());
         $this->assertNull($activeColumn->getValues());
     }
 

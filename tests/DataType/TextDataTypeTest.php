@@ -14,7 +14,7 @@ class TextDataTypeTest extends AbstractDataTypeTest
         for ($i = 0; $i < 10; ++$i) {
             $populatedData = $dataType->populate($column);
             $this->assertTrue(is_string($populatedData));
-            $this->assertGreaterThanOrEqual(10, strlen($populatedData));
+            $this->assertGreaterThanOrEqual(1, strlen($populatedData));
             $this->assertLessThanOrEqual(65535, strlen($populatedData));
         }
     }
