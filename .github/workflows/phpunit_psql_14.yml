@@ -1,4 +1,4 @@
-name: PHPunit
+name: PHPunit Postgres 14
 
 on:
   push:
@@ -12,19 +12,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.1', '7.2', '7.3', '7.4', '8.0', '8.1' ]
+        php: [ '7.4', '8.0', '8.1' ]
 
     name: PHPunit PHP ${{ matrix.php }}
 
     services:
-      mysql:
-        image: mysql:5.7
+      postgres:
+        image: postgres:14
         env:
-          MYSQL_DATABASE: populator
-          MYSQL_ROOT_PASSWORD: 123
+          POSTGRES_PASSWORD: 123
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
         ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          - 5432
 
     steps:
       - name: Checkout code
@@ -38,12 +37,10 @@ jobs:
       - name: Composer update
         run: composer update --no-progress --no-interaction
 
-      - name: Start mysql database
-        run: sudo /etc/init.d/mysql start
-
       - name: PHPunit
         run: vendor/bin/phpunit --coverage-text
         env:
-          POPULATOR_MYSQL_HOST: 127.0.0.1
-          POPULATOR_MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
-          POPULATOR_MYSQL_PASSWORD: 123
+          POPULATOR_ADAPTER: pgsql
+          POPULATOR_HOST: 127.0.0.1
+          POPULATOR_PORT: ${{ job.services.postgres.ports[5432] }}
+          POPULATOR_PASSWORD: 123

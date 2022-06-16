@@ -165,7 +165,7 @@ class Database implements DatabaseInterface
             'type' => $this->getType($column),
             'autoincrement' => $column['autoincrement'],
             'length' => $column['size'] ?: null,
-            'unsigned' => (bool) strstr($column['vendor']['type'], 'unsigned'),
+            'unsigned' => isset($column['vendor']['type']) && strstr($column['vendor']['type'], 'unsigned'),
             'nullable' => $column['nullable'],
             'default' => ($column['nullable'] && $column['default'] === null) || $column['default'] !== null ? $column['default'] : null,
         ];
@@ -178,12 +178,17 @@ class Database implements DatabaseInterface
     {
         $type = strtolower($column['nativetype']);
         $types = [
+            'bool' => 'boolean',
             'int' => 'integer',
+            'int4' => 'integer',
+            'float4' => 'float',
+            'float8' => 'double',
             'tinyint' => 'tinyinteger',
             'smallint' => 'smallinteger',
             'mediumint' => 'mediuminteger',
             'bigint' => 'biginteger',
             'varchar' => 'string',
+            'timestamp' => 'datetime',
         ];
 
         if (isset($types[$type])) {

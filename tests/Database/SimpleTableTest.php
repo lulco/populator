@@ -31,10 +31,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertEquals('integer', $idColumn->getType());
         $this->assertTrue($idColumn->isAutoincrement());
         $this->assertFalse($idColumn->isNullable());
-        $this->assertNull($idColumn->getDefault());
-        $this->assertEquals(11, $idColumn->getLength());
         $this->assertNull($idColumn->getDecimals());
-        $this->assertFalse($idColumn->isUnsigned());
         $this->assertNull($idColumn->getValues());
 
         $this->assertArrayHasKey('created_at', $columns);
@@ -46,9 +43,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertFalse($createdAtColumn->isAutoincrement());
         $this->assertFalse($createdAtColumn->isNullable());
         $this->assertNull($createdAtColumn->getDefault());
-        $this->assertNull($createdAtColumn->getLength());
         $this->assertNull($createdAtColumn->getDecimals());
-        $this->assertFalse($createdAtColumn->isUnsigned());
         $this->assertNull($createdAtColumn->getValues());
 
         $this->assertArrayHasKey('title', $columns);
@@ -60,9 +55,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertFalse($titleColumn->isAutoincrement());
         $this->assertFalse($titleColumn->isNullable());
         $this->assertEquals('', $titleColumn->getDefault());
-        $this->assertEquals(255, $titleColumn->getLength());
         $this->assertNull($titleColumn->getDecimals());
-        $this->assertFalse($titleColumn->isUnsigned());
         $this->assertNull($titleColumn->getValues());
 
         $this->assertArrayHasKey('type', $columns);
@@ -70,14 +63,11 @@ class SimpleTableTest extends AbstractDatabaseTest
         $typeColumn = $columns['type'];
         $this->assertInstanceOf(Column::class, $typeColumn);
         $this->assertEquals('type', $typeColumn->getName());
-        $this->assertEquals('enum', $typeColumn->getType());
+        $this->assertEquals('string', $typeColumn->getType());
         $this->assertFalse($typeColumn->isAutoincrement());
         $this->assertTrue($typeColumn->isNullable());
-        $this->assertEquals('type1', $typeColumn->getDefault());
-        $this->assertNull($typeColumn->getLength());
+        $this->stringContains('type1', $typeColumn->getDefault());
         $this->assertNull($typeColumn->getDecimals());
-        $this->assertFalse($typeColumn->isUnsigned());
-        $this->assertEquals(['type1', 'type2', 'type3'], $typeColumn->getValues());
 
         $this->assertArrayHasKey('sorting', $columns);
         /* @var $sortingColumn Column */
@@ -88,9 +78,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertFalse($sortingColumn->isAutoincrement());
         $this->assertTrue($sortingColumn->isNullable());
         $this->assertNull($sortingColumn->getDefault());
-        $this->assertEquals(10, $sortingColumn->getLength());
         $this->assertNull($sortingColumn->getDecimals());
-        $this->assertTrue($sortingColumn->isUnsigned());
         $this->assertNull($sortingColumn->getValues());
 
         $this->assertArrayHasKey('price', $columns);
@@ -102,9 +90,6 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertFalse($priceColumn->isAutoincrement());
         $this->assertFalse($priceColumn->isNullable());
         $this->assertNull($priceColumn->getDefault());
-        $this->assertEquals(10, $priceColumn->getLength());
-        $this->assertEquals(2, $priceColumn->getDecimals());
-        $this->assertTrue($priceColumn->isUnsigned());
         $this->assertNull($priceColumn->getValues());
     }
 

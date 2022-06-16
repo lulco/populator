@@ -13,16 +13,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PopulatorCommand extends Command
 {
     /** @var DatabaseInterface[] */
-    protected $databases = [];
+    protected array $databases = [];
 
     /** @var PopulatorInterface[] */
-    protected $populators = [];
+    protected array $populators = [];
 
-    /** @var array */
-    protected $languages = [];
+    /** @var string[] */
+    protected array $languages = [];
 
     /** @var EventInterface[] */
-    protected $events = [];
+    protected array $events = [];
 
     protected function configure(): void
     {

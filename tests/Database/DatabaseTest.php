@@ -10,15 +10,20 @@ class DatabaseTest extends AbstractDatabaseTest
 {
     public function testWrongCredentials()
     {
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');
+        $adapter = getenv('POPULATOR_ADAPTER');
+        $dsn = $adapter . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT') . ';dbname=' . getenv('POPULATOR_DATABASE');
         $this->expectException(DatabaseConnectionException::class);
-        $this->expectExceptionMessage("SQLSTATE[HY000] [1045] Access denied for user '" . getenv('POPULATOR_MYSQL_USERNAME') . "'@'");
-        new Database(getenv('POPULATOR_MYSQL_DATABASE'), $dsn, getenv('POPULATOR_MYSQL_USERNAME'), 'wrong_password');
+        if ($adapter === 'pgsql') {
+            $this->expectExceptionMessage('SQLSTATE[08006] [7] FATAL:  password authentication failed for user "' . getenv('POPULATOR_USERNAME') . '"');
+        } else {
+            $this->expectExceptionMessage("SQLSTATE[HY000] [1045] Access denied for user '" . getenv('POPULATOR_USERNAME') . "'@'");
+        }
+        new Database(getenv('POPULATOR_DATABASE'), $dsn, getenv('POPULATOR_USERNAME'), 'wrong_password');
     }
 
     public function testGetName()
     {
-        $this->assertEquals(getenv('POPULATOR_MYSQL_DATABASE'), $this->database->getName());
+        $this->assertEquals(getenv('POPULATOR_DATABASE'), $this->database->getName());
     }
 
     public function testGetTableStructureForNonExistingTable()

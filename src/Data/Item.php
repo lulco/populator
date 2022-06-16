@@ -4,7 +4,7 @@ namespace Populator\Data;
 
 class Item implements ItemInterface
 {
-    private $data;
+    private array $data;
 
     public function __construct(array $data)
     {

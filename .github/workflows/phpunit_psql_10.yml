@@ -1,0 +1,46 @@
+name: PHPunit Postgres 10
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: null
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.4', '8.0', '8.1' ]
+
+    name: PHPunit PHP ${{ matrix.php }}
+
+    services:
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_PASSWORD: 123
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=5
+        ports:
+          - 5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Composer update
+        run: composer update --no-progress --no-interaction
+
+      - name: PHPunit
+        run: vendor/bin/phpunit --coverage-text
+        env:
+          POPULATOR_ADAPTER: pgsql
+          POPULATOR_HOST: 127.0.0.1
+          POPULATOR_PORT: ${{ job.services.postgres.ports[5432] }}
+          POPULATOR_PASSWORD: 123

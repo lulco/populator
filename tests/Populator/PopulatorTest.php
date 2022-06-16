@@ -79,9 +79,9 @@ class PopulatorTest extends TestCase
     {
         $this->cleanup();
 
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');
+        $dsn = getenv('POPULATOR_ADAPTER') . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT') . ';dbname=' . getenv('POPULATOR_DATABASE');
         $databases = [
-            new Database(getenv('POPULATOR_MYSQL_DATABASE'), $dsn, getenv('POPULATOR_MYSQL_USERNAME'), getenv('POPULATOR_MYSQL_PASSWORD')),
+            new Database(getenv('POPULATOR_DATABASE'), $dsn, getenv('POPULATOR_USERNAME'), getenv('POPULATOR_PASSWORD')),
         ];
 
         $populator = $this->createPopulator('my_table');
@@ -114,9 +114,9 @@ class PopulatorTest extends TestCase
     {
         $this->cleanup();
 
-        $dsn = 'mysql:host=' . getenv('POPULATOR_MYSQL_HOST') . ';port=' . getenv('POPULATOR_MYSQL_PORT') . ';dbname=' . getenv('POPULATOR_MYSQL_DATABASE');
+        $dsn = getenv('POPULATOR_ADAPTER') . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT') . ';dbname=' . getenv('POPULATOR_DATABASE');
         $databases = [
-            new Database(getenv('POPULATOR_MYSQL_DATABASE'), $dsn, getenv('POPULATOR_MYSQL_USERNAME'), getenv('POPULATOR_MYSQL_PASSWORD')),
+            new Database(getenv('POPULATOR_DATABASE'), $dsn, getenv('POPULATOR_USERNAME'), getenv('POPULATOR_PASSWORD')),
         ];
 
         $this->createSimpleTable();
