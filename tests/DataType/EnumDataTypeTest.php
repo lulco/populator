@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class EnumDataTypeTest extends AbstractDataTypeTest
 {
-    public function testOneValueColumn()
+    public function testOneValueColumn(): void
     {
         $column = new Column('column', 'enum', ['values' => ['a']]);
         $dataType = new EnumDataType($this->faker);
@@ -17,7 +17,7 @@ class EnumDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testMoreValuesColumn()
+    public function testMoreValuesColumn(): void
     {
         $values = ['a', 'b', 'c'];
         $column = new Column('column', 'enum', ['values' => $values]);

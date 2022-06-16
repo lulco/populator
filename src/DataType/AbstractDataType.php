@@ -7,8 +7,7 @@ use Populator\Structure\Column;
 
 abstract class AbstractDataType implements DataTypeInterface
 {
-    /** @var Generator */
-    protected $faker;
+    protected Generator $faker;
 
     public function __construct(Generator $faker)
     {
@@ -16,7 +15,6 @@ abstract class AbstractDataType implements DataTypeInterface
     }
 
     /**
-     * @param Column $column
      * @return mixed
      */
     abstract public function populate(Column $column);

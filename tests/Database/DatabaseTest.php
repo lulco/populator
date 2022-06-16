@@ -8,7 +8,7 @@ use Populator\Exception\TableNotFoundException;
 
 class DatabaseTest extends AbstractDatabaseTest
 {
-    public function testWrongCredentials()
+    public function testWrongCredentials(): void
     {
         $adapter = getenv('POPULATOR_ADAPTER');
         $dsn = $adapter . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT') . ';dbname=' . getenv('POPULATOR_DATABASE');
@@ -21,12 +21,12 @@ class DatabaseTest extends AbstractDatabaseTest
         new Database(getenv('POPULATOR_DATABASE'), $dsn, getenv('POPULATOR_USERNAME'), 'wrong_password');
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals(getenv('POPULATOR_DATABASE'), $this->database->getName());
     }
 
-    public function testGetTableStructureForNonExistingTable()
+    public function testGetTableStructureForNonExistingTable(): void
     {
         $this->expectException(TableNotFoundException::class);
         $this->expectExceptionMessage("Table 'non_existing_table' does not exist.");

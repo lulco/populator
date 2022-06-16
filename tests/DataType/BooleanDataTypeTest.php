@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class BooleanDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'boolean');
         $dataType = new BooleanDataType($this->faker);

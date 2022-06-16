@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class MediumblobDataType extends BlobDataType
 {
-    protected $max = 16777215;
+    protected int $max = 16777215;
 }

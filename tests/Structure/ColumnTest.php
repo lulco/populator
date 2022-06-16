@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class ColumnTest extends TestCase
 {
-    public function testEmptySettings()
+    public function testEmptySettings(): void
     {
         $column = new Column('my_column', 'string');
         $this->assertInstanceOf(Column::class, $column);
@@ -22,7 +22,7 @@ class ColumnTest extends TestCase
         $this->assertNull($column->getValues());
     }
 
-    public function testFullSettings()
+    public function testFullSettings(): void
     {
         $column = new Column('my_string_column', 'string', [
             'nullable' => true,

@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class DoubleDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'double');
         $dataType = new DoubleDataType($this->faker);
@@ -18,7 +18,7 @@ class DoubleDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'double', ['length' => 5]);
         $dataType = new DoubleDataType($this->faker);
@@ -30,7 +30,7 @@ class DoubleDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthAndDecimalsSettingsColumn()
+    public function testLengthAndDecimalsSettingsColumn(): void
     {
         $column = new Column('column', 'double', ['length' => 7, 'decimals' => 2]);
         $dataType = new DoubleDataType($this->faker);
@@ -42,7 +42,7 @@ class DoubleDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testUnsignedSettingsColumn()
+    public function testUnsignedSettingsColumn(): void
     {
         $column = new Column('column', 'double', ['length' => 7, 'decimals' => 2, 'unsigned' => true]);
         $dataType = new DoubleDataType($this->faker);

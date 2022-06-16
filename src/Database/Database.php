@@ -58,7 +58,7 @@ class Database implements DatabaseInterface
 
         $table = $this->getTableStructure($tableName);
         $offset = mt_rand(0, $count - 1);
-        $order = $table->getPrimary() ? $table->getPrimary() : array_keys($table->getColumns());
+        $order = $table->getPrimary() ?: array_keys($table->getColumns());
         $record = $this->database->table($tableName)
             ->order(implode(', ', $order))
             ->limit(1, $offset)

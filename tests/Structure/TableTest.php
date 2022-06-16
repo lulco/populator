@@ -9,7 +9,7 @@ use Populator\Structure\Table;
 
 class TableTest extends TestCase
 {
-    public function testEmptyTable()
+    public function testEmptyTable(): void
     {
         $table = new Table('my_table');
         $this->assertInstanceOf(Table::class, $table);
@@ -19,7 +19,7 @@ class TableTest extends TestCase
         $this->assertEmpty($table->getForeignKeys());
     }
 
-    public function testSimpleTable()
+    public function testSimpleTable(): void
     {
         $table = new Table('my_table');
         $this->assertInstanceOf(Table::class, $table);
@@ -33,7 +33,7 @@ class TableTest extends TestCase
         $this->assertEmpty($table->getForeignKeys());
     }
 
-    public function testComplexTable()
+    public function testComplexTable(): void
     {
         $table = new Table('my_table');
         $this->assertInstanceOf(Table::class, $table);

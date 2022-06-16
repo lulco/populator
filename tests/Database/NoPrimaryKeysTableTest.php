@@ -7,7 +7,7 @@ use Populator\Structure\Table;
 
 class NoPrimaryKeysTableTest extends AbstractDatabaseTest
 {
-    public function testInsert()
+    public function testInsert(): void
     {
         $this->createNoPrimaryKeysTable();
         $this->assertInstanceOf(Table::class, $this->database->getTableStructure('no_primary_key'));
@@ -21,7 +21,7 @@ class NoPrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertEquals('my_value', $item->getValue('meta_value'));
     }
 
-    public function testGetRandomRecord()
+    public function testGetRandomRecord(): void
     {
         $this->createNoPrimaryKeysTable();
         $this->assertInstanceOf(Table::class, $this->database->getTableStructure('no_primary_key'));

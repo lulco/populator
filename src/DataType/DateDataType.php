@@ -4,9 +4,9 @@ namespace Populator\DataType;
 
 class DateDataType extends DatetimeBetweenDataType
 {
-    protected $startTime = '-2 years';
+    protected string $startTime = '-2 years';
 
-    protected $endTime = 'now';
+    protected string $endTime = 'now';
 
-    protected $format = 'Y-m-d';
+    protected string $format = 'Y-m-d';
 }

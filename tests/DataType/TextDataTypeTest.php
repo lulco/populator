@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class TextDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'text');
         $dataType = new TextDataType($this->faker);

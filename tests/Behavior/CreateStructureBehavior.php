@@ -57,7 +57,7 @@ trait CreateStructureBehavior
         $this->createAndExecuteQueries($migrationTable);
     }
 
-    protected function createMultiplePrimaryKeysTable()
+    protected function createMultiplePrimaryKeysTable(): void
     {
         $migrationTable = (new MigrationTable('multiple_primary_keys', ['pk1', 'pk2']))
             ->addColumn('pk1', 'integer')
@@ -69,7 +69,7 @@ trait CreateStructureBehavior
         $this->createAndExecuteQueries($migrationTable);
     }
 
-    protected function createStructureWithForeignKeys()
+    protected function createStructureWithForeignKeys(): void
     {
         $migrationTable = (new MigrationTable('table_1'))
             ->addColumn('is_active', 'boolean')
@@ -96,7 +96,7 @@ trait CreateStructureBehavior
         $this->createAndExecuteQueries($migrationTable);
     }
 
-    private function getPdo($database = null)
+    private function getPdo(?string $database = null): PDO
     {
         if (isset($this->pdoList[$database])) {
             return $this->pdoList[$database];

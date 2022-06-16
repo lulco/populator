@@ -4,17 +4,16 @@ namespace Populator\Structure;
 
 class Table
 {
-    /** @var string */
-    private $name;
+    private string $name;
 
     /** @var Column[] */
-    private $columns = [];
+    private array $columns = [];
 
-    /** @var array */
-    private $primaryColumns = [];
+    /** @var string[] */
+    private array $primaryColumns = [];
 
     /** @var ForeignKey[] */
-    private $foreignKeys = [];
+    private array $foreignKeys = [];
 
     public function __construct(string $name)
     {
@@ -37,12 +36,18 @@ class Table
         return $this->columns;
     }
 
+    /**
+     * @param string[] $primaryColumns
+     */
     public function setPrimary(array $primaryColumns = []): Table
     {
         $this->primaryColumns = $primaryColumns;
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPrimary(): array
     {
         return $this->primaryColumns;

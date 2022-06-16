@@ -8,7 +8,7 @@ use Populator\Structure\Column;
 
 class DatetimeDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'datetime');
         $dataType = new DatetimeDataType($this->faker);

@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class BlobDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'blob');
         $dataType = new BlobDataType($this->faker);

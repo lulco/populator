@@ -9,7 +9,7 @@ use Populator\Structure\Table;
 
 class SimpleTableTest extends AbstractDatabaseTest
 {
-    public function testGetTableStructure()
+    public function testGetTableStructure(): void
     {
         $this->createSimpleTable();
 
@@ -93,7 +93,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertNull($priceColumn->getValues());
     }
 
-    public function testInsert()
+    public function testInsert(): void
     {
         $this->createSimpleTable();
         $this->assertInstanceOf(Table::class, $this->database->getTableStructure('simple'));
@@ -125,7 +125,7 @@ class SimpleTableTest extends AbstractDatabaseTest
         $this->assertEquals(234.56, $item2->getValue('price'));
     }
 
-    public function testGetRandomRecord()
+    public function testGetRandomRecord(): void
     {
         $this->createSimpleTable();
         $this->assertInstanceOf(Table::class, $this->database->getTableStructure('simple'));

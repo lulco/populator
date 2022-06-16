@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class CharDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'char');
         $dataType = new CharDataType($this->faker);
@@ -17,7 +17,7 @@ class CharDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'char', ['length' => 100]);
         $dataType = new CharDataType($this->faker);

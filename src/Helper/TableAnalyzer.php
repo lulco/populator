@@ -54,6 +54,10 @@ class TableAnalyzer
         return $sortedTables;
     }
 
+    /**
+     * @param string[] $foreignKeysTables
+     * @param array<string, int> $sortedTables
+     */
     private function getCountOfForeignKeys(array $foreignKeysTables, array $sortedTables): int
     {
         $counts = [];

@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class IntegerDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'integer');
         $dataType = new IntegerDataType($this->faker);
@@ -19,7 +19,7 @@ class IntegerDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'integer', ['length' => 5]);
         $dataType = new IntegerDataType($this->faker);
@@ -31,7 +31,7 @@ class IntegerDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testUnsignedSettingsColumn()
+    public function testUnsignedSettingsColumn(): void
     {
         $column = new Column('column', 'integer', ['unsigned' => true]);
         $dataType = new IntegerDataType($this->faker);

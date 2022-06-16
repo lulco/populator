@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class BinaryDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'binary');
         $dataType = new BinaryDataType($this->faker);
@@ -18,7 +18,7 @@ class BinaryDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'binary', ['length' => 100]);
         $dataType = new BinaryDataType($this->faker);

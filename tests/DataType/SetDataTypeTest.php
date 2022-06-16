@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class SetDataTypeTest extends AbstractDataTypeTest
 {
-    public function testOneValueColumn()
+    public function testOneValueColumn(): void
     {
         $column = new Column('column', 'set', ['values' => ['a']]);
         $dataType = new SetDataType($this->faker);
@@ -17,7 +17,7 @@ class SetDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testMoreValuesColumn()
+    public function testMoreValuesColumn(): void
     {
         $values = ['a', 'b', 'c'];
         $possibleValues = [

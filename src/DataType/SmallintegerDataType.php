@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class SmallintegerDataType extends IntegerDataType
 {
-    protected $bytes = 2;
+    protected int $bytes = 2;
 }

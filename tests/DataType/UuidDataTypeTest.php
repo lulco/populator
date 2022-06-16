@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class UuidDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'uuid');
         $dataType = new UuidDataType($this->faker);

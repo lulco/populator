@@ -3,3 +3,4 @@
 /coverage
 /build
 /.idea
+/.phpunit.result.cache
