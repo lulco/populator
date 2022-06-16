@@ -28,7 +28,8 @@ class TableAnalyzer
             $foreignKeysInTables[$tableName] = [];
 
             foreach ($foreignKeys as $foreignKey) {
-                $foreignKeysInTables[$tableName][] = $foreignKey->getReferencedTable();
+                $referencedTableParts = explode('.', $foreignKey->getReferencedTable());
+                $foreignKeysInTables[$tableName][] = end($referencedTableParts);
             }
         }
 
