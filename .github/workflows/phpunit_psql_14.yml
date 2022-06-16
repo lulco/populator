@@ -41,6 +41,7 @@ jobs:
         run: vendor/bin/phpunit --coverage-text
         env:
           POPULATOR_ADAPTER: pgsql
-          POPULATOR_HOST: 127.0.0.1
+          POPULATOR_HOST: localhost
           POPULATOR_PORT: ${{ job.services.postgres.ports[5432] }}
+          POPULATOR_USERNAME: postgres
           POPULATOR_PASSWORD: 123

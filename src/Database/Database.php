@@ -5,7 +5,7 @@ namespace Populator\Database;
 use Nette\Caching\Storages\MemoryStorage;
 use Nette\Database\Connection;
 use Nette\Database\ConnectionException;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Structure;
 use Nette\Database\Table\ActiveRow;
 use Nette\InvalidArgumentException;
@@ -18,14 +18,12 @@ use Populator\Structure\Table;
 
 class Database implements DatabaseInterface
 {
-    /** @var string  */
-    private $name;
+    private string $name;
 
-    /** @var Context  */
-    private $databaseContext;
+    private Explorer $database;
 
     /** @var array<string, Table>  */
-    private $structures = [];
+    private array $structures = [];
 
     public function __construct(
         string $name,
@@ -39,8 +37,8 @@ class Database implements DatabaseInterface
             $connection = new Connection($dsn, $user, $password, $options);
             $cacheStorage = new MemoryStorage();
             $structure = new Structure($connection, $cacheStorage);
-            $databaseContext = new Context($connection, $structure);
-            $this->databaseContext = $databaseContext;
+            $database = new Explorer($connection, $structure);
+            $this->database = $database;
         } catch (ConnectionException $e) {
             throw new DatabaseConnectionException($e->getMessage(), 0, $e);
         }
@@ -53,7 +51,7 @@ class Database implements DatabaseInterface
 
     public function getRandomRecord(string $tableName): ?Item
     {
-        $count = $this->databaseContext->table($tableName)->count('*');
+        $count = $this->database->table($tableName)->count('*');
         if ($count === 0) {
             return null;
         }
@@ -61,7 +59,7 @@ class Database implements DatabaseInterface
         $table = $this->getTableStructure($tableName);
         $offset = mt_rand(0, $count - 1);
         $order = $table->getPrimary() ? $table->getPrimary() : array_keys($table->getColumns());
-        $record = $this->databaseContext->table($tableName)
+        $record = $this->database->table($tableName)
             ->order(implode(', ', $order))
             ->limit(1, $offset)
             ->fetch();
@@ -70,7 +68,7 @@ class Database implements DatabaseInterface
 
     public function getTableNames(): array
     {
-        return array_column($this->databaseContext->getStructure()->getTables(), 'name');
+        return array_column($this->database->getStructure()->getTables(), 'name');
     }
 
     public function getTableStructure(string $tableName): Table
@@ -98,7 +96,7 @@ class Database implements DatabaseInterface
 
     public function insert(string $tableName, array $data): ?Item
     {
-        $record = $this->databaseContext->table($tableName)->insert($data);
+        $record = $this->database->table($tableName)->insert($data);
         if (!$record) {
             return null;
         }
@@ -114,14 +112,14 @@ class Database implements DatabaseInterface
         foreach ($primaryColumns as $primaryColumn) {
             $where[$primaryColumn] = $data[$primaryColumn];
         }
-        $record = $this->databaseContext->table($tableName)->wherePrimary($where)->fetch();
+        $record = $this->database->table($tableName)->wherePrimary($where)->fetch();
         return $record ? new Item($record->toArray()) : null;
     }
 
     private function addColumnsToTable(Table $table): void
     {
         try {
-            $columns = $this->databaseContext->getStructure()->getColumns($table->getName());
+            $columns = $this->database->getStructure()->getColumns($table->getName());
         } catch (InvalidArgumentException $e) {
             throw new TableNotFoundException($e->getMessage(), 0, $e);
         }
@@ -135,7 +133,7 @@ class Database implements DatabaseInterface
 
     private function addForeignKeysToTable(Table $table): void
     {
-        $references = $this->databaseContext->getStructure()->getBelongsToReference($table->getName());
+        $references = $this->database->getStructure()->getBelongsToReference($table->getName());
         if (!$references) {
             return;
         }
@@ -143,14 +141,14 @@ class Database implements DatabaseInterface
             $table->addForeignKey(new ForeignKey(
                 [$columnName],
                 $referencedTableName,
-                [$this->databaseContext->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
+                [$this->database->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
             ));
         }
     }
 
     private function addPrimaryKeyToTable(Table $table): void
     {
-        $primaryKey = $this->databaseContext->getStructure()->getPrimaryKey($table->getName());
+        $primaryKey = $this->database->getStructure()->getPrimaryKey($table->getName());
         if ($primaryKey && !is_array($primaryKey)) {
             $primaryKey = [$primaryKey];
         }
