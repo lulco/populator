@@ -14,7 +14,7 @@ class DatabaseTest extends AbstractDatabaseTest
         $dsn = $adapter . ':host=' . getenv('POPULATOR_HOST') . ';port=' . getenv('POPULATOR_PORT') . ';dbname=' . getenv('POPULATOR_DATABASE');
         $this->expectException(DatabaseConnectionException::class);
         if ($adapter === 'pgsql') {
-            $this->expectExceptionMessage('SQLSTATE[08006] [7] FATAL:  password authentication failed for user "' . getenv('POPULATOR_USERNAME') . '"');
+            $this->expectExceptionMessage('password authentication failed for user "' . getenv('POPULATOR_USERNAME') . '"');
         } else {
             $this->expectExceptionMessage("SQLSTATE[HY000] [1045] Access denied for user '" . getenv('POPULATOR_USERNAME') . "'@'");
         }
