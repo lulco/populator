@@ -4,7 +4,9 @@ namespace Populator\Tests\Event;
 
 use Faker\Generator;
 use PHPUnit\Framework\TestCase;
+use Populator\Database\DatabaseInterface;
 use Populator\Populator\AbstractPopulator;
+use Populator\Populator\PopulatorInterface;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -13,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class EventTest extends TestCase
 {
-    protected function createInput()
+    protected function createInput(): InputInterface
     {
         return new class implements InputInterface
         {
@@ -94,15 +96,15 @@ abstract class EventTest extends TestCase
         };
     }
 
-    protected function createOutput()
+    protected function createOutput(): OutputInterface
     {
         return new class implements OutputInterface
         {
-            private $messages = [];
+            private array $messages = [];
 
-            private $formatter;
+            private OutputFormatterInterface $formatter;
 
-            private $verbosity = self::VERBOSITY_NORMAL;
+            private int $verbosity = self::VERBOSITY_NORMAL;
 
             public function __construct()
             {
@@ -165,7 +167,7 @@ abstract class EventTest extends TestCase
                     return $this->messages;
                 }
 
-                return isset($this->messages[$verbosity]) ? $this->messages[$verbosity] : [];
+                return $this->messages[$verbosity] ?? [];
             }
 
             public function isDebug(): bool
@@ -190,7 +192,7 @@ abstract class EventTest extends TestCase
         };
     }
 
-    protected function createPopulator(string $table, int $count = 10, ?string $databaseIdentifier = null)
+    protected function createPopulator(string $table, int $count = 10, ?string $databaseIdentifier = null): PopulatorInterface
     {
         return new class($table, $count, $databaseIdentifier) extends AbstractPopulator
         {
@@ -209,7 +211,7 @@ abstract class EventTest extends TestCase
                 return $this->databases;
             }
 
-            public function checkDatabase(?string $database = null)
+            public function checkDatabase(?string $database = null): DatabaseInterface
             {
                 return $this->getDatabase($database);
             }

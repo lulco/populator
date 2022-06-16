@@ -6,8 +6,7 @@ use Populator\Structure\Column;
 
 class BooleanDataType extends AbstractDataType
 {
-    /** @var int */
-    protected $trueProbability = 50;
+    protected int $trueProbability = 50;
 
     public function populate(Column $column): bool
     {

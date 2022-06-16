@@ -2,6 +2,6 @@
 
 namespace Populator\Exception;
 
-class TableNotFoundException extends DatabaseException
+class DatabaseConnectionException extends DatabaseException
 {
 }

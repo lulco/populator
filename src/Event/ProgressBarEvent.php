@@ -9,8 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProgressBarEvent extends AbstractEvent
 {
-    /** @var ProgressBar */
-    private $progressBar;
+    private ProgressBar $progressBar;
 
     public function create(PopulatorInterface $populator, InputInterface $input, OutputInterface $output): EventInterface
     {

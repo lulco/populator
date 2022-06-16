@@ -7,7 +7,7 @@ use Populator\Event\SimpleInfoEvent;
 
 class SimpleInfoEventTest extends EventTest
 {
-    public function testEvents()
+    public function testEvents(): void
     {
         $event = new SimpleInfoEvent();
         $input = $this->createInput();

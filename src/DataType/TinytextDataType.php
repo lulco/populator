@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class TinytextDataType extends TextDataType
 {
-    protected $max = 255;
+    protected int $max = 255;
 }

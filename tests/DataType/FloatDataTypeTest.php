@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class FloatDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'float');
         $dataType = new FloatDataType($this->faker);
@@ -18,7 +18,7 @@ class FloatDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'float', ['length' => 5]);
         $dataType = new FloatDataType($this->faker);
@@ -30,7 +30,7 @@ class FloatDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthAndDecimalsSettingsColumn()
+    public function testLengthAndDecimalsSettingsColumn(): void
     {
         $column = new Column('column', 'float', ['length' => 7, 'decimals' => 2]);
         $dataType = new FloatDataType($this->faker);
@@ -42,7 +42,7 @@ class FloatDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testUnsignedSettingsColumn()
+    public function testUnsignedSettingsColumn(): void
     {
         $column = new Column('column', 'float', ['length' => 7, 'decimals' => 2, 'unsigned' => true]);
         $dataType = new FloatDataType($this->faker);

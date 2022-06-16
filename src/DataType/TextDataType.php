@@ -6,8 +6,7 @@ use Populator\Structure\Column;
 
 class TextDataType extends AbstractDataType
 {
-    /** @var int */
-    protected $max = 65535;
+    protected int $max = 65535;
 
     public function populate(Column $column): string
     {

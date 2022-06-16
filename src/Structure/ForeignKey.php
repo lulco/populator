@@ -4,15 +4,15 @@ namespace Populator\Structure;
 
 class ForeignKey
 {
-    private $columns;
+    private array $columns;
 
-    private $referencedTable;
+    private string $referencedTable;
 
-    private $referencedColumns;
+    private array $referencedColumns;
 
-    private $referencedDatabase;
+    private ?string $referencedDatabase;
 
-    public function __construct(array $columns, string $referencedTable, array $referencedColumns = ['id'], string $referencedDatabase = null)
+    public function __construct(array $columns, string $referencedTable, array $referencedColumns = ['id'], ?string $referencedDatabase = null)
     {
         $this->columns = $columns;
         $this->referencedTable = $referencedTable;

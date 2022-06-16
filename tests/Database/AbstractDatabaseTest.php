@@ -10,7 +10,7 @@ abstract class AbstractDatabaseTest extends TestCase
 {
     use CreateStructureBehavior;
 
-    protected $database;
+    protected Database $database;
 
     protected function setUp(): void
     {

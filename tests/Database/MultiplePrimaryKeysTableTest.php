@@ -14,7 +14,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->createMultiplePrimaryKeysTable();
     }
 
-    public function testStructure()
+    public function testStructure(): void
     {
         $table = $this->database->getTableStructure('multiple_primary_keys');
         $this->assertInstanceOf(Table::class, $table);
@@ -73,7 +73,7 @@ class MultiplePrimaryKeysTableTest extends AbstractDatabaseTest
         $this->assertNull($activeColumn->getValues());
     }
 
-    public function testInsert()
+    public function testInsert(): void
     {
         $item = $this->database->insert('multiple_primary_keys', [
             'pk1' => 100,

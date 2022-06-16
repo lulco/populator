@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class LongtextDataType extends TextDataType
 {
-    protected $max = 4294967295;
+    protected int $max = 4294967295;
 }

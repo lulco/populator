@@ -17,21 +17,21 @@ class PopulatorTest extends TestCase
 {
     use CreateStructureBehavior;
 
-    public function testDefaultConstruct()
+    public function testDefaultConstruct(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->assertEquals('my_table', $populator->getTableName());
         $this->assertEquals(10, $populator->getCount());
     }
 
-    public function testChangedConstruct()
+    public function testChangedConstruct(): void
     {
         $populator = $this->createPopulator('my_table', 20);
         $this->assertEquals('my_table', $populator->getTableName());
         $this->assertEquals(20, $populator->getCount());
     }
 
-    public function testAddLanguages()
+    public function testAddLanguages(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->assertEmpty($populator->getLanguages());
@@ -44,7 +44,7 @@ class PopulatorTest extends TestCase
         $this->assertEquals(['sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'en', 'en', 'en', 'en', 'en'], $populator->getLanguages());
     }
 
-    public function testSetLanguages()
+    public function testSetLanguages(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->assertEmpty($populator->getLanguages());
@@ -59,7 +59,7 @@ class PopulatorTest extends TestCase
         $this->assertEquals(['sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk', 'sk'], $populator->getLanguages());
     }
 
-    public function testSetEmptyDatabases()
+    public function testSetEmptyDatabases(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->expectException(InvalidArgumentException::class);
@@ -67,7 +67,7 @@ class PopulatorTest extends TestCase
         $populator->setDatabases([]);
     }
 
-    public function testSetWrongDatabases()
+    public function testSetWrongDatabases(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->expectException(InvalidArgumentException::class);
@@ -75,7 +75,7 @@ class PopulatorTest extends TestCase
         $populator->setDatabases([1 => 2, 3 => 4]);
     }
 
-    public function testSetDatabases()
+    public function testSetDatabases(): void
     {
         $this->cleanup();
 
@@ -91,7 +91,7 @@ class PopulatorTest extends TestCase
         $this->assertInstanceOf(DatabaseInterface::class, $populator->checkDatabase());
     }
 
-    public function testAddEvent()
+    public function testAddEvent(): void
     {
         $populator = $this->createPopulator('my_table');
         $this->assertEmpty($populator->getEvents());
@@ -110,7 +110,7 @@ class PopulatorTest extends TestCase
         }
     }
 
-    public function testPopulate()
+    public function testPopulate(): void
     {
         $this->cleanup();
 
@@ -131,7 +131,7 @@ class PopulatorTest extends TestCase
         $this->assertEquals(5, $populator->populate());
     }
 
-    private function createPopulator(string $table, int $count = 10, ?string $databaseIdentifier = null)
+    private function createPopulator(string $table, int $count = 10, ?string $databaseIdentifier = null): PopulatorInterface
     {
         return new class($table, $count, $databaseIdentifier) extends AutomaticPopulator
         {

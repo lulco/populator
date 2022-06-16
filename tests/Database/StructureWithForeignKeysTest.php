@@ -8,7 +8,7 @@ use Populator\Structure\Table;
 
 class StructureWithForeignKeysTest extends AbstractDatabaseTest
 {
-    public function testGetTablesStructure()
+    public function testGetTablesStructure(): void
     {
         $this->createStructureWithForeignKeys();
 

@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class TimeDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'time');
         $dataType = new TimeDataType($this->faker);

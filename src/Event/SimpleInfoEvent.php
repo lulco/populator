@@ -4,8 +4,7 @@ namespace Populator\Event;
 
 class SimpleInfoEvent extends AbstractEvent
 {
-    /** @var float */
-    private $startTime;
+    private float $startTime;
 
     public function beforeStart(): void
     {

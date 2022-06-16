@@ -8,14 +8,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractEvent implements EventInterface
 {
-    /** @var PopulatorInterface */
-    protected $populator;
+    protected PopulatorInterface $populator;
 
-    /** @var InputInterface */
-    protected $input;
+    protected InputInterface $input;
 
-    /** @var OutputInterface */
-    protected $output;
+    protected OutputInterface $output;
 
     public function create(PopulatorInterface $populator, InputInterface $input, OutputInterface $output): EventInterface
     {

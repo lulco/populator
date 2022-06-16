@@ -8,7 +8,7 @@ use Populator\Data\Item;
 
 class ItemTest extends TestCase
 {
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $data = [
             'id' => 'my-id',

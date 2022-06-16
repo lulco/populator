@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class TinyblobDataType extends BlobDataType
 {
-    protected $max = 255;
+    protected int $max = 255;
 }

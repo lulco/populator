@@ -7,7 +7,7 @@ use Populator\Event\ProgressBarEvent;
 
 class ProgressBarEventTest extends EventTest
 {
-    public function testEvents()
+    public function testEvents(): void
     {
         $event = new ProgressBarEvent();
         $input = $this->createInput();

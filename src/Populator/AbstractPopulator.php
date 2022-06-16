@@ -13,31 +13,26 @@ use Populator\Event\EventInterface;
 abstract class AbstractPopulator implements PopulatorInterface
 {
     /** @var DatabaseInterface[] */
-    protected $databases = [];
+    protected array $databases = [];
 
-    /** @var array */
-    protected $languages = [];
+    /** @var string[] */
+    protected array $languages = [];
 
     /** @var EventInterface[] */
-    protected $events = [];
+    protected array $events = [];
 
-    /** @var string */
-    protected $table;
+    protected string $table;
 
-    /** @var int */
-    protected $count;
+    protected int $count;
 
-    /** @var string|null */
-    protected $databaseIdentifier;
+    protected ?string $databaseIdentifier;
 
     /** @var Generator[] */
-    private $fakers = [];
+    private array $fakers = [];
 
-    /** @var int */
-    private $maxRetries = 3;
+    private int $maxRetries = 3;
 
-    /** @var int */
-    private $retries = 0;
+    private int $retries = 0;
 
     public function __construct(string $table, int $count = 10, ?string $databaseIdentifier = null)
     {
@@ -65,7 +60,9 @@ abstract class AbstractPopulator implements PopulatorInterface
             $data = $this->generateData($this->getFaker());
             $data = $this->postProcessData($data);
             try {
-                $this->getDatabase()->insert($this->table, $data) ? $inserted++ : null;
+                if ($this->getDatabase()->insert($this->table, $data)) {
+                    $inserted++;
+                }
             } catch (PDOException $e) {
                 $i--;
                 if ($this->retries === $this->maxRetries) {
@@ -96,7 +93,7 @@ abstract class AbstractPopulator implements PopulatorInterface
         return $this;
     }
 
-    public function addLanguage($language, $priority = 10): PopulatorInterface
+    public function addLanguage(string $language, int $priority = 10): PopulatorInterface
     {
         $this->languages = array_merge($this->languages, array_fill(0, $priority, $language));
         return $this;

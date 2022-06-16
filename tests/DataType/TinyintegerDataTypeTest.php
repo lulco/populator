@@ -7,7 +7,7 @@ use Populator\Structure\Column;
 
 class TinyintegerDataTypeTest extends AbstractDataTypeTest
 {
-    public function testNoSettingsColumn()
+    public function testNoSettingsColumn(): void
     {
         $column = new Column('column', 'tinyinteger');
         $dataType = new TinyintegerDataType($this->faker);
@@ -19,7 +19,7 @@ class TinyintegerDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testLengthSettingsColumn()
+    public function testLengthSettingsColumn(): void
     {
         $column = new Column('column', 'tinyinteger', ['length' => 5]);
         $dataType = new TinyintegerDataType($this->faker);
@@ -31,7 +31,7 @@ class TinyintegerDataTypeTest extends AbstractDataTypeTest
         }
     }
 
-    public function testUnsignedSettingsColumn()
+    public function testUnsignedSettingsColumn(): void
     {
         $column = new Column('column', 'tinyinteger', ['unsigned' => true]);
         $dataType = new TinyintegerDataType($this->faker);

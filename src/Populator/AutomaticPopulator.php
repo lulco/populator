@@ -10,20 +10,15 @@ use Populator\Structure\Column;
 
 class AutomaticPopulator extends AbstractPopulator
 {
-    /** @var int  */
-    protected $nullableValueProbability;
+    protected int $nullableValueProbability;
 
-    /** @var int  */
-    protected $defaultValueProbability;
+    protected int $defaultValueProbability;
 
-    /** @var array  */
-    protected $columnNameAndTypeClasses = [];
+    protected array $columnNameAndTypeClasses = [];
 
-    /** @var array  */
-    protected $columnNameClasses = [];
+    protected array $columnNameClasses = [];
 
-    /** @var array  */
-    protected $dataTypeClasses = [];
+    protected array $dataTypeClasses = [];
 
     public function __construct(
         string $table,

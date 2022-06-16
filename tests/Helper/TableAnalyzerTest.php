@@ -10,7 +10,7 @@ use Populator\Structure\Table;
 
 class TableAnalyzerTest extends TestCase
 {
-    private $tableAnalyzer;
+    private TableAnalyzer $tableAnalyzer;
 
     protected function setUp(): void
     {

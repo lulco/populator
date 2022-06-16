@@ -7,7 +7,7 @@ use Populator\Structure\ForeignKey;
 
 class ForeignKeyTest extends TestCase
 {
-    public function testSingleForeignKeySettings()
+    public function testSingleForeignKeySettings(): void
     {
         $foreignKey = new ForeignKey(['fk_column'], 'referenced_table');
         $this->assertInstanceOf(ForeignKey::class, $foreignKey);
@@ -17,7 +17,7 @@ class ForeignKeyTest extends TestCase
         $this->assertNull($foreignKey->getReferencedDatabase());
     }
 
-    public function testMultiForeignKeySettings()
+    public function testMultiForeignKeySettings(): void
     {
         $foreignKey = new ForeignKey(['column_1', 'column_2'], 'referenced_table', ['ref_col_1', 'ref_col_2']);
         $this->assertInstanceOf(ForeignKey::class, $foreignKey);
@@ -27,7 +27,7 @@ class ForeignKeyTest extends TestCase
         $this->assertNull($foreignKey->getReferencedDatabase());
     }
 
-    public function testOtherDatabaseSingleForeignKeySettings()
+    public function testOtherDatabaseSingleForeignKeySettings(): void
     {
         $foreignKey = new ForeignKey(['fk_column'], 'referenced_table', ['id'], 'referenced_database');
         $this->assertInstanceOf(ForeignKey::class, $foreignKey);

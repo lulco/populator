@@ -4,11 +4,11 @@ namespace Populator\Structure;
 
 class Column
 {
-    private $name;
+    private string $name;
 
-    private $type;
+    private string $type;
 
-    private $settings = [];
+    private array $settings;
 
     public function __construct(string $name, string $type, array $settings = [])
     {

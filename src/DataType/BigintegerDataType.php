@@ -4,5 +4,5 @@ namespace Populator\DataType;
 
 class BigintegerDataType extends IntegerDataType
 {
-    protected $bytes = 8;
+    protected int $bytes = 8;
 }

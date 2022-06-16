@@ -6,14 +6,11 @@ use Populator\Structure\Column;
 
 class DatetimeBetweenDataType extends AbstractDataType
 {
-    /** @var string */
-    protected $startTime;
+    protected string $startTime;
 
-    /** @var string */
-    protected $endTime;
+    protected string $endTime;
 
-    /** @var string */
-    protected $format;
+    protected string $format;
 
     public function populate(Column $column): string
     {
