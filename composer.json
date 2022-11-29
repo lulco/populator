@@ -5,7 +5,7 @@
     "keywords": ["PHP", "Database", "Fake data"],
     "license": "MIT",
     "require": {
-        "php": ">=7.4 <8.2",
+        "php": ">=7.4 <8.3",
         "ext-json": "*",
         "ext-pdo": "*",
         "fakerphp/faker": "^1.17",
@@ -14,7 +14,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "lulco/phoenix": "^2.2"
+        "lulco/phoenix": "^2.3"
     },
     "autoload": {
         "psr-4": {

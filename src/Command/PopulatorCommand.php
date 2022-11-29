@@ -60,7 +60,7 @@ class PopulatorCommand extends Command
 
     public function addLanguage(string $language, int $priority = 10): PopulatorCommand
     {
-        $this->languages = array_merge($this->languages, array_fill(0, $priority, $language));
+        $this->languages = array_merge($this->languages, array_fill(0, $priority, $language) ?: []);
         return $this;
     }
 
