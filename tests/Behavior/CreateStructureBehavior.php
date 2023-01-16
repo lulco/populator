@@ -40,7 +40,7 @@ trait CreateStructureBehavior
             ->addColumn('created_at', 'datetime')
             ->addColumn('title', 'string')
             ->addColumn('type', 'string', ['null' => true, 'default' => 'type1'])
-            ->addColumn('sorting', 'integer', ['null' => true, 'length' => 10])
+            ->addColumn('sorting', 'integer', ['null' => true, 'length' => 10, 'signed' => false])
             ->addColumn('price', 'double', ['length' => 10, 'decimals' => 2])
         ;
         $migrationTable->create();
