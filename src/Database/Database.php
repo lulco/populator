@@ -174,7 +174,7 @@ class Database implements DatabaseInterface
 
     private function getType(array $column): string
     {
-        $type = strtolower($column['nativetype']);
+        $type = explode(' ', strtolower($column['nativetype']))[0];
         $types = [
             'bool' => 'boolean',
             'int' => 'integer',
