@@ -7,6 +7,7 @@
 - Replaced abandoned fzaninotto/faker with fakerphp/faker
 
 #### Added
+- Numeric data type
 - Ignore and skip tables in automatic populator command
 - Add test combination foreign key and self foreign key to test class table analyzer
 - Support for PHP 8.0, PHP 8.1 and PHP 8.2
