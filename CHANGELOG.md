@@ -2,6 +2,7 @@
 
 ### [Unreleased][unreleased]
 
+### [1.2.0] - 2023-08-29
 #### Changed
 - Do not throw exception when max retries is reached
 - Replaced abandoned fzaninotto/faker with fakerphp/faker
@@ -28,6 +29,7 @@
 - Database structure resolver
 - Data type populators
 
-[unreleased]: https://github.com/lulco/populator/compare/1.1.0...HEAD
+[unreleased]: https://github.com/lulco/populator/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/lulco/populator/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/lulco/populator/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/lulco/populator/compare/f744a241c8cb78327e2d5d382f5af88228779cfb...1.0.0
