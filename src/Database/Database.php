@@ -34,7 +34,7 @@ class Database implements DatabaseInterface
     ) {
         $this->name = $name;
         try {
-            $connection = new Connection($dsn, $user, $password, $options);
+            $connection = new Connection($dsn, $user, $password, $options ?? []);
             $cacheStorage = new MemoryStorage();
             $structure = new Structure($connection, $cacheStorage);
             $database = new Explorer($connection, $structure);
