@@ -9,7 +9,7 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "fakerphp/faker": "^1.17",
-        "symfony/console": "^4.2 | ^5.0 | ^6.0",
+        "symfony/console": "^4.2 | ^5.0 | ^6.0 | ^7.0",
         "nette/database": "^3.0"
     },
     "require-dev": {
