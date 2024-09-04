@@ -27,4 +27,4 @@ jobs:
         run: composer require dg/php-extensions-finder --dev
 
       - name: PHP extensions finder
-        run: vendor/bin/php-extensions-finder check src tests
+        run: php vendor/dg/php-extensions-finder/php-extensions-finder check src tests

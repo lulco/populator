@@ -217,6 +217,7 @@ class Database implements DatabaseInterface
         $fullType = $column['vendor']['type'];
         $pattern = '/(.*?)\((.*?)\)(.*)/';
         preg_match($pattern, $fullType, $matches);
+        /** @var array<int, string> $matches */
         $type = trim($matches[1]);
         if (in_array($type, ['enum', 'set'])) {
             $values = str_replace("'", '', $matches[2]);
