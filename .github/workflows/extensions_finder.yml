@@ -26,5 +26,8 @@ jobs:
       - name: Install PHP extensions finder as dev dependency
         run: composer require dg/php-extensions-finder --dev
 
-      - name: PHP extensions finder
-        run: php vendor/dg/php-extensions-finder/php-extensions-finder check src tests
+      - name: PHP extensions finder src
+        run: php vendor/dg/php-extensions-finder/php-extensions-finder src
+
+      - name: PHP extensions finder tests
+        run: php vendor/dg/php-extensions-finder/php-extensions-finder tests
