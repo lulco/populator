@@ -1,6 +1,8 @@
 ## Change Log
 
 ### [Unreleased][unreleased]
+
+### [1.3.0] - 2024-10-22
 #### Added
 - PHP8.3 support
 - Symfony 7 support
@@ -32,7 +34,8 @@
 - Database structure resolver
 - Data type populators
 
-[unreleased]: https://github.com/lulco/populator/compare/1.2.0...HEAD
+[unreleased]: https://github.com/lulco/populator/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/lulco/populator/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/lulco/populator/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/lulco/populator/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/lulco/populator/compare/f744a241c8cb78327e2d5d382f5af88228779cfb...1.0.0
