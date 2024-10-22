@@ -34,7 +34,7 @@ class Database implements DatabaseInterface
     ) {
         $this->name = $name;
         try {
-            $connection = new Connection($dsn, $user, $password, $options);
+            $connection = new Connection($dsn, $user, $password, $options ?? []);
             $cacheStorage = new MemoryStorage();
             $structure = new Structure($connection, $cacheStorage);
             $database = new Explorer($connection, $structure);
@@ -141,7 +141,7 @@ class Database implements DatabaseInterface
             $table->addForeignKey(new ForeignKey(
                 [$columnName],
                 $referencedTableName,
-                [$this->database->getStructure()->getPrimaryKey($referencedTableName)]   // this is not always primary key, but nette database ignores this fact
+                [$this->database->getStructure()->getPrimaryKey($referencedTableName)] // this is not always primary key, but nette database ignores this fact
             ));
         }
     }
@@ -217,6 +217,7 @@ class Database implements DatabaseInterface
         $fullType = $column['vendor']['type'];
         $pattern = '/(.*?)\((.*?)\)(.*)/';
         preg_match($pattern, $fullType, $matches);
+        /** @var array<int, string> $matches */
         $type = trim($matches[1]);
         if (in_array($type, ['enum', 'set'])) {
             $values = str_replace("'", '', $matches[2]);

@@ -1,5 +1,7 @@
 parameters:
-    checkMissingIterableValueType: false
-    reportUnmatchedIgnoredErrors: true
+    level: max
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+        -
+            identifier: missingType.iterableValue
         - '#Parameter \#2 \$cacheStorage of class Nette\\Database\\Structure constructor expects Nette\\Caching\\IStorage, Nette\\Caching\\Storages\\MemoryStorage given\.#'

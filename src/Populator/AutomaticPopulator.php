@@ -120,7 +120,7 @@ class AutomaticPopulator extends AbstractPopulator
 
         $class = new $className($faker);
         if (!$class instanceof DataTypeInterface) {
-            throw new Exception('Class "' . $className . '" is not type of '  . DataTypeInterface::class);
+            throw new Exception('Class "' . $className . '" is not type of ' . DataTypeInterface::class);
         }
         return $class;
     }
