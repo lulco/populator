@@ -17,89 +17,15 @@ abstract class EventTest extends TestCase
 {
     protected function createInput(): InputInterface
     {
-        return new class implements InputInterface
-        {
-            public function bind(InputDefinition $definition)
-            {
-
-            }
-
-            public function getArgument($name)
-            {
-
-            }
-
-            public function getArguments(): array
-            {
-
-            }
-
-            public function getFirstArgument(): string
-            {
-
-            }
-
-            public function getOption($name)
-            {
-
-            }
-
-            public function getOptions(): array
-            {
-
-            }
-
-            public function getParameterOption($values, $default = false, $onlyParams = false)
-            {
-
-            }
-
-            public function hasArgument($name): bool
-            {
-
-            }
-
-            public function hasOption($name): bool
-            {
-
-            }
-
-            public function hasParameterOption($values, $onlyParams = false): bool
-            {
-
-            }
-
-            public function isInteractive(): bool
-            {
-
-            }
-
-            public function setArgument($name, $value)
-            {
-
-            }
-
-            public function setInteractive($interactive)
-            {
-
-            }
-
-            public function setOption($name, $value)
-            {
-
-            }
-
-            public function validate()
-            {
-
-            }
-        };
+        if (PHP_VERSION_ID < 80200) {
+            return require __DIR__ . '/NullInputSymfony6.php';
+        }
+        return require __DIR__ . '/NullInputSymfony7.php';
     }
 
     protected function createOutput(): OutputInterface
     {
-        return new class implements OutputInterface
-        {
+        return new class implements OutputInterface {
             private array $messages = [];
 
             private OutputFormatterInterface $formatter;
@@ -194,8 +120,7 @@ abstract class EventTest extends TestCase
 
     protected function createPopulator(string $table, int $count = 10, ?string $databaseIdentifier = null): PopulatorInterface
     {
-        return new class($table, $count, $databaseIdentifier) extends AbstractPopulator
-        {
+        return new class($table, $count, $databaseIdentifier) extends AbstractPopulator {
             protected function generateData(Generator $faker): array
             {
                 return [];

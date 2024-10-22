@@ -5,16 +5,17 @@
     "keywords": ["PHP", "Database", "Fake data"],
     "license": "MIT",
     "require": {
-        "php": ">=7.4 <8.3",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "ext-pdo": "*",
         "fakerphp/faker": "^1.17",
-        "symfony/console": "^4.2 | ^5.0 | ^6.0",
+        "symfony/console": "^4.2 | ^5.0 | ^6.0 | ^7.0",
         "nette/database": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "lulco/phoenix": "^2.3"
+        "lulco/phoenix": "^2.3",
+        "phpstan/phpstan": "^1.12"
     },
     "autoload": {
         "psr-4": {

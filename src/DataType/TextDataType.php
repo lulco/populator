@@ -10,6 +10,6 @@ class TextDataType extends AbstractDataType
 
     public function populate(Column $column): string
     {
-        return $this->faker->realTextBetween(1, mt_rand(10, $this->max));
+        return $this->faker->realTextBetween(10, $this->max);
     }
 }

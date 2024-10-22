@@ -1,6 +1,9 @@
 ## Change Log
 
 ### [Unreleased][unreleased]
+#### Added
+- PHP8.3 support
+- Symfony 7 support
 
 ### [1.2.0] - 2023-08-29
 #### Changed
