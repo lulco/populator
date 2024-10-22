@@ -17,7 +17,7 @@ abstract class EventTest extends TestCase
 {
     protected function createInput(): InputInterface
     {
-        if (PHP_VERSION_ID < 80300) {
+        if (PHP_VERSION_ID < 80200) {
             return require __DIR__ . '/NullInputSymfony6.php';
         }
         return require __DIR__ . '/NullInputSymfony7.php';
